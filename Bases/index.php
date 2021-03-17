@@ -31,7 +31,6 @@
             <?php
              include_once dirname(__FILE__) . '/consultas/consultas.php';
             $usuarios = lista_Usuarios();
-            
 
             while ($fila = oci_fetch_array($usuarios, OCI_ASSOC+OCI_RETURN_NULLS)) 
             {
@@ -41,7 +40,6 @@
                     echo "<td><a href='pantallas/pantallaInicio/pantallaInicio.php?idUsuario=".$fila['USER_ID']."&nombreUsuario=".$fila['USERNAME']."'>seleccionar</td>\n";
                 echo "</tr>\n";
             }
-
             ?>
         </tbody>
     </table>
