@@ -2,59 +2,61 @@
 -- tiene los campos table_name y owner
 
 CREATE OR REPLACE VIEW col_nombre_tipo AS
-	SELECT col.TABLE_NAME AS tabla, col.COLUMN_NAME AS nom_col, col.data_type AS tipo
-	FROM sys.all_tab_columns col, sys.all_tab_comments com
-	WHERE col.TABLE_NAME = com.TABLE_NAME;
+	SELECT col.TABLE_NAME AS tabla, col.COLUMN_NAME AS columnas, col.data_type AS tipo
+	FROM sys.all_tab_columns col;
 	/
 
-CREATE OR REPLACE VIEW tabla_comentarios AS
+CREATE OR REPLACE VIEW columna_comentarios AS
 	SELECT TABLE_NAME AS tabla, comments AS comentario
 	FROM sys.all_tab_comments;
 	/
 
-CREATE OR REPLACE VIEW con_nombre_tipo_comentario AS
-	SELECT col.TABLE_NAME AS tabla, col.COLUMN_NAME AS nom_col, col.data_type AS tipo, com.comments AS comentario
-	FROM sys.all_tab_columns col, sys.all_col_comments com
-	WHERE col.TABLE_NAME = com.TABLE_NAME AND col.COLUMN_NAME = com.COLUMN_NAME;
+CREATE OR REPLACE VIEW informacion_interna_tabla AS
+	SELECT col.tabla, col.columnas, col.tipo, com.comentario
+	FROM col_nombre_tipo col, columna_comentarios com
+	WHERE col.tabla = com.tabla;
 	/
 
-	-- WHERE TABLE_NAME = nombre_tabla;
+-----------------------------------------------------------------------------------------
 
--- CREATE OR REPLACE
--- 	FUNCTION conseguir_comentario_columna (nombre_tabla varchar2, nombre_columna varchar2)
--- 	RETURN sys_refcursor
--- IS
--- 	cursor_columnas_tabla sys_refcursor;
--- BEGIN
--- 	OPEN cursor_columnas_tabla FOR
--- 		SELECT comments FROM sys.all_col_comments
--- 		WHERE
--- 			TABLE_NAME = nombre_tabla
--- 			AND COLUMN_NAME = nombre_columna;
---
--- 	return cursor_columnas_tabla;
--- END conseguir_comentario_columna;
--- /
+CREATE OR REPLACE VIEW restricciones_tabla AS
+	SELECT owner, CONSTRAINT_NAME AS restriccion, TABLE_NAME AS tabla
+	FROM ALL_CONSTRAINTS;
+	/
 
--- select col.table_name, col.column_name from sys.all_tab_columns col where table_name = 'VENTAS';
+CREATE OR REPLACE VIEW tabla_comentario AS
+	SELECT com.TABLE_NAME AS tabla, com.comments AS tabla_comentario
+	FROM sys.all_tab_comments com;
+	/
 
--- CREATE OR REPLACE FUNCTION run_cursor (cursor_vals sys_refcursor)
--- RETURN
--- IS
--- 	v_order_rec sys.all_tab_columns%ROWTYPE;
--- BEGIN
--- 	FOR val IN cursor_vals LOOP
---         dbms_output.put_line (val);
--- 	END LOOP;
--- 	-- LOOP
---
--- 	-- 	FETCH cursor_vals INTO v_order_rec;
--- 	-- 	EXIT WHEN cursor_vals%NOTFOUND;
---     --     dbms_output.put_line(v_order_rec);
---     -- END LOOP;
---
---     RETURN(v_ret_val);
--- END run_cursor;
--- /
+CREATE OR REPLACE VIEW indices_tabla AS
+	SELECT
+		TABLE_NAME AS tabla,
+		index_name AS indice,
+		table_owner AS owner,
+		tablespace_name AS tablespace,
+		distinct_keys,
+		status,
+		indexing
+	from ALL_INDEXES;
+	/
 
--- select col.table_name, col.column_name from sys.all_tab_columns col where table_name = 'VENTAS';
+CREATE OR REPLACE VIEW informacion_tabla AS
+	SELECT
+		res.tabla,
+		res.owner,
+		res.restriccion,
+		com.tabla_comentario,
+		ind.indice,
+		ind.tablespace,
+		ind.status,
+		ind.indexing
+	FROM restricciones_tabla res, tabla_comentario com, indices_tabla ind
+	WHERE res.tabla = com.tabla AND res.tabla = ind.tabla AND res.owner = ind.owner;
+
+
+-- CREATE OR REPLACE VIEW informacion_tabla AS
+-- 	SELECT col.tabla, col.columnas, col.tipo, col.comentario
+-- 	FROM RESTRICCIONES_TABLA res, TABLA_COMENTARIO tab, CON_NOMBRE_TIPO_COMENTARIO col
+-- 	WHERE res.tabla = tab.tabla AND res.tabla = com.tabla;
+-- 	/
