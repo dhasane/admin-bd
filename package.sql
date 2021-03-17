@@ -1,52 +1,40 @@
 -- para conseguir todas las tablas se hace un query a all_tables
 -- tiene los campos table_name y owner
 
-CREATE OR REPLACE
-	FUNCTION conseguir_columnas (nombre_tabla varchar2)
-	RETURN sys_refcursor
-IS
-	cursor_columnas_tabla sys_refcursor;
-BEGIN
-	OPEN cursor_columnas_tabla FOR
-		SELECT col.table_name, col.COLUMN_NAME, col.data_type, col.
-		FROM sys.all_tab_columns col, sys.all_tab_comments com
-		JOIN
-		WHERE table_name = nombre_tabla;
+CREATE OR REPLACE VIEW col_nombre_tipo AS
+	SELECT col.TABLE_NAME AS tabla, col.COLUMN_NAME AS nom_col, col.data_type AS tipo
+	FROM sys.all_tab_columns col, sys.all_tab_comments com
+	WHERE col.TABLE_NAME = com.TABLE_NAME;
+	/
 
-	return cursor_columnas_tabla;
-END conseguir_columnas;
-/
+CREATE OR REPLACE VIEW tabla_comentarios AS
+	SELECT TABLE_NAME AS tabla, comments AS comentario
+	FROM sys.all_tab_comments;
+	/
 
-CREATE OR REPLACE
-	FUNCTION conseguir_comentario_tabla (nombre_tabla varchar2)
-	RETURN sys_refcursor
-IS
-	cursor_columnas_tabla sys_refcursor;
-BEGIN
-	OPEN cursor_columnas_tabla FOR
-		SELECT TABLE_NAME, comments
-		FROM sys.all_tab_comments
-		WHERE table_name = nombre_tabla;
+CREATE OR REPLACE VIEW con_nombre_tipo_comentario AS
+	SELECT col.TABLE_NAME AS tabla, col.COLUMN_NAME AS nom_col, col.data_type AS tipo, com.comments AS comentario
+	FROM sys.all_tab_columns col, sys.all_col_comments com
+	WHERE col.TABLE_NAME = com.TABLE_NAME AND col.COLUMN_NAME = com.COLUMN_NAME;
+	/
 
-	return cursor_columnas_tabla;
-END conseguir_comentario_tabla;
-/
+	-- WHERE TABLE_NAME = nombre_tabla;
 
-CREATE OR REPLACE
-	FUNCTION conseguir_comentario_columna (nombre_tabla varchar2, nombre_columna varchar2)
-	RETURN sys_refcursor
-IS
-	cursor_columnas_tabla sys_refcursor;
-BEGIN
-	OPEN cursor_columnas_tabla FOR
-		SELECT comments FROM sys.all_col_comments
-		WHERE
-			TABLE_NAME = nombre_tabla
-			AND COLUMN_NAME = nombre_columna;
-
-	return cursor_columnas_tabla;
-END conseguir_comentario_columna;
-/
+-- CREATE OR REPLACE
+-- 	FUNCTION conseguir_comentario_columna (nombre_tabla varchar2, nombre_columna varchar2)
+-- 	RETURN sys_refcursor
+-- IS
+-- 	cursor_columnas_tabla sys_refcursor;
+-- BEGIN
+-- 	OPEN cursor_columnas_tabla FOR
+-- 		SELECT comments FROM sys.all_col_comments
+-- 		WHERE
+-- 			TABLE_NAME = nombre_tabla
+-- 			AND COLUMN_NAME = nombre_columna;
+--
+-- 	return cursor_columnas_tabla;
+-- END conseguir_comentario_columna;
+-- /
 
 -- select col.table_name, col.column_name from sys.all_tab_columns col where table_name = 'VENTAS';
 
