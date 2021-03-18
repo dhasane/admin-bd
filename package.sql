@@ -21,7 +21,7 @@ CREATE OR REPLACE VIEW informacion_interna_tabla AS
 
 CREATE OR REPLACE VIEW restricciones_tabla AS
 	SELECT owner, CONSTRAINT_NAME AS restriccion, TABLE_NAME AS tabla
-	FROM ALL_CONSTRAINTS;
+	FROM sys.ALL_CONSTRAINTS;
 	/
 
 CREATE OR REPLACE VIEW tabla_comentario AS
@@ -38,7 +38,7 @@ CREATE OR REPLACE VIEW indices_tabla AS
 		distinct_keys,
 		status,
 		indexing
-	from ALL_INDEXES;
+	from sys.ALL_INDEXES;
 	/
 
 CREATE OR REPLACE VIEW informacion_tabla AS
@@ -54,9 +54,26 @@ CREATE OR REPLACE VIEW informacion_tabla AS
 	FROM restricciones_tabla res, tabla_comentario com, indices_tabla ind
 	WHERE res.tabla = com.tabla AND res.tabla = ind.tabla AND res.owner = ind.owner;
 
+--------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE VIEW permisos_usuario AS
+	select grantor, grantee AS usuario, TABLE_NAME AS tabla, privilege AS privilegio
+	from sys.all_tab_privs ;
+
 
 -- CREATE OR REPLACE VIEW informacion_tabla AS
 -- 	SELECT col.tabla, col.columnas, col.tipo, col.comentario
 -- 	FROM RESTRICCIONES_TABLA res, TABLA_COMENTARIO tab, CON_NOMBRE_TIPO_COMENTARIO col
 -- 	WHERE res.tabla = tab.tabla AND res.tabla = com.tabla;
 -- 	/
+
+-- BEGIN
+--    FOR R IN
+--    (SELECT TABLE_NAME, OWNER FROM ALL_TABLES WHERE TABLESPACE_NAME = 'TABLASPROYECTO') LOOP
+--       EXECUTE IMMEDIATE 'grant select on '||R.OWNER||'.'||R.TABLE_NAME||' to grupousuario';
+--    END LOOP;
+-- END;
+
+-- SELECT *
+-- from ALL_TABLES T, ALL_TAB_PRIVS P
+-- where T.table_name = 'VENTAS';
