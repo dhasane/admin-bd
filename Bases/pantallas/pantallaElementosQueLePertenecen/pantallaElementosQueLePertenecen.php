@@ -34,17 +34,16 @@
         </thead>
         <tbody>
             <?php
-             include_once dirname(__FILE__) . '../../../consultas/consultas.php';
-            $tablas = lista_tablas_usuario($nombreUsuario);
-            
+                include_once dirname(__FILE__) . '../../../consultas/consultas.php';
+                $tablas = lista_tablas_usuario($nombreUsuario);
 
-            while ($fila = oci_fetch_array($tablas, OCI_ASSOC+OCI_RETURN_NULLS)) 
-            {
-                echo "<tr>\n";
-                    echo "<td>".$fila['TABLE_NAME']."</td>";
-                    #echo "<td><a href='pantallas/pantallaInicio/pantallaInicio.php?idUsuario=".$fila['USER_ID']."&nombreUsuario=".$fila['USERNAME']."'>seleccionar</td>\n";
-                echo "</tr>\n";
-            }
+                while ($fila = oci_fetch_array($tablas, OCI_ASSOC+OCI_RETURN_NULLS)) 
+                {
+                    echo "<tr>\n";
+                        echo "<td>".$fila['TABLE_NAME']."</td>";
+                        #echo "<td><a href='pantallas/pantallaInicio/pantallaInicio.php?idUsuario=".$fila['USER_ID']."&nombreUsuario=".$fila['USERNAME']."'>seleccionar</td>\n";
+                    echo "</tr>\n";
+                }
 
             ?>
         </tbody>

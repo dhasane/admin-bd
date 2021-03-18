@@ -24,6 +24,35 @@
         echo $str_datos;
     ?>
 
+        <form action="pantallaVisualizarYAdministrarJobs.php" method="post">
+            <table border="1" style="width:100%">
+            <tr>
+                <th>nombre job</th>
+                <th>dueño del job</th>
+                <th>Activar</th>
+                <th>Desactivar</th>
+            </tr>
+
+            <?php
+                include_once dirname(__FILE__) . '../../../consultas/consultas.php';
+                $tablas = jobs_por_usuario();
+
+                $n = 0;
+                while ($fila = oci_fetch_array($tablas, OCI_ASSOC+OCI_RETURN_NULLS)) 
+                {
+                    echo "<tr>\n";
+                        echo "<td>".$fila['OWNER']."</td>";
+                        echo "<td>".$fila['JOB_NAME']."</td>";
+                        echo "<td><input type='radio'  name='opcion".$n."' value='Activar'/></td>";  
+                        echo "<td><input type='radio'  name='opcion".$n."' value='Desactivar'/></td>";    
+                        #echo "<td><a href='pantallas/pantallaInicio/pantallaInicio.php?idUsuario=".$fila['USER_ID']."&nombreUsuario=".$fila['USERNAME']."'>seleccionar</td>\n";
+                    echo "</tr>\n";
+                    $n = $n + 1;
+                }
+            ?>
+            <input type="submit" value="Ejecutar">
+        </form>
+
   <div class="">
         <div class="login_form">
         </div>
