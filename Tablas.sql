@@ -1,3 +1,9 @@
+--TABLESPACE
+-- TABLESPACE PARA USUARIOS = 'USUARIOS'
+-- TABLESPACE PARA TABLAS = 'TABLASPROYECTO'
+
+
+
 --DROPS 
 DROP TABLE Empleado CASCADE CONSTRAINTS;
 DROP TABLE Habitaciones CASCADE CONSTRAINTS;
@@ -13,12 +19,12 @@ CREATE TABLE Empleado
     rol VARCHAR2(30),
     activo CHAR, CHECK (activo in ('S', 'N')),
     PRIMARY KEY (username)
-);
+) tablespace tablasProyecto;
 
 CREATE TABLE Habitaciones
 (
     numero_hab INT
-);
+) tablespace tablasProyecto;
 
 CREATE TABLE Camas
 (
@@ -26,7 +32,7 @@ CREATE TABLE Camas
     habitacion_numero INT,
     paciente_id INT,
     disponible CHAR, CHECK (disponible in ('S', 'N'))
-);
+) tablespace tablasProyecto;
 
 CREATE TABLE Pacientes
 (
@@ -38,7 +44,7 @@ CREATE TABLE Pacientes
     fecha_ingreso DATE,
     duracion_dias INT,
     nombre_medico VARCHAR2(30)
-);
+) tablespace tablasProyecto;
  
 --Alters
 ALTER TABLE Habitaciones ADD CONSTRAINT numero_habitacion_pk PRIMARY KEY (numero_hab);
