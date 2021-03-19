@@ -29,6 +29,7 @@
             <tr>
                 <th>nombre job</th>
                 <th>dueño del job</th>
+                <th>Activo</th>
                 <th>Activar</th>
                 <th>Desactivar</th>
             </tr>
@@ -43,6 +44,7 @@
                     echo "<tr>\n";
                         echo "<td>".$fila['OWNER']."</td>";
                         echo "<td>".$fila['JOB_NAME']."</td>";
+                        echo "<td>".$fila['ENABLED']."</td>";
                         echo "<td><input type='radio'  name='opcion".$n."' value='Activar'/></td>";  
                         echo "<td><input type='radio'  name='opcion".$n."' value='Desactivar'/></td>";    
                         #echo "<td><a href='pantallas/pantallaInicio/pantallaInicio.php?idUsuario=".$fila['USER_ID']."&nombreUsuario=".$fila['USERNAME']."'>seleccionar</td>\n";
