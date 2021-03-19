@@ -248,4 +248,66 @@
         oci_close($conexión);
         return $stid;  
     }
+
+    function activar_job($nombreTabla)
+    {
+        $conexión = oci_connect(USUARIO_DB,USUARIO_PASS,HOST_DB);
+
+        if (!$conexión) 
+        {
+            $e = oci_error();
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }
+
+        // Preparar la sentencia
+        $stid = oci_parse($conexión, "  BEGIN
+                                        DBMS_SCHEDULER.ENABLE('".$nombreTabla."');
+                                        END;
+                                        ");
+        if (!$stid) 
+        {
+            $e = oci_error($conexión);
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }
+
+        // Realizar la lógica de la consulta
+        $r = oci_execute($stid);
+        if (!$r) {
+            $e = oci_error($stid);
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }
+        oci_close($conexión);
+        return true;  
+    }
+
+    function desactivar_job($nombreTabla)
+    {
+        $conexión = oci_connect(USUARIO_DB,USUARIO_PASS,HOST_DB);
+
+        if (!$conexión) 
+        {
+            $e = oci_error();
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }
+
+        // Preparar la sentencia
+        $stid = oci_parse($conexión, "  BEGIN
+                                        DBMS_SCHEDULER.DISABLE('".$nombreTabla."');
+                                        END;
+                                        ");
+        if (!$stid) 
+        {
+            $e = oci_error($conexión);
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }
+
+        // Realizar la lógica de la consulta
+        $r = oci_execute($stid);
+        if (!$r) {
+            $e = oci_error($stid);
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }
+        oci_close($conexión);
+        return true;  
+    }
 ?>
