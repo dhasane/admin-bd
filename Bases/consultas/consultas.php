@@ -166,4 +166,86 @@
         oci_close($conexión);
         return $stid;  
     }
+
+    function informacion_tabla($nombreTabla)
+    {
+        $conexión = oci_connect(USUARIO_DB,USUARIO_PASS,HOST_DB);
+
+        if (!$conexión) 
+        {
+            $e = oci_error();
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }
+
+        // Preparar la sentencia
+        $stid = oci_parse($conexión, "  SELECT  informacion_tabla.TABLA,
+                                                informacion_tabla.owner,
+                                                informacion_tabla.RESTRICCION,
+                                                informacion_tabla.TABLA_COMENTARIO,
+                                                informacion_tabla.INDICE,
+                                                informacion_tabla.tablespace,
+                                                informacion_tabla.status,
+                                                informacion_tabla.indexing
+                                        from informacion_tabla,
+                                            (
+                                                SELECT TABLE_NAME
+                                                FROM ALL_TABLES
+                                                WHERE TABLESPACE_NAME = 'TABLASPROYECTO' AND TABLE_NAME = '".$nombreTabla."'
+                                                ORDER BY TABLE_NAME
+                                            )tablas
+                                        where informacion_tabla.TABLA = tablas.TABLE_NAME ");
+        if (!$stid) 
+        {
+            $e = oci_error($conexión);
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }
+
+        // Realizar la lógica de la consulta
+        $r = oci_execute($stid);
+        if (!$r) {
+            $e = oci_error($stid);
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }
+        oci_close($conexión);
+        return $stid;  
+    }
+
+    function informacion_interna_tabla($nombreTabla)
+    {
+        $conexión = oci_connect(USUARIO_DB,USUARIO_PASS,HOST_DB);
+
+        if (!$conexión) 
+        {
+            $e = oci_error();
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }
+
+        // Preparar la sentencia
+        $stid = oci_parse($conexión, "  SELECT  informacion_interna_tabla.tabla,
+                                                informacion_interna_tabla.columnas,
+                                                informacion_interna_tabla.tipo,
+                                                informacion_interna_tabla.comentario
+                                        from informacion_interna_tabla,
+                                            (
+                                                SELECT TABLE_NAME
+                                                FROM ALL_TABLES
+                                                WHERE TABLESPACE_NAME = 'TABLASPROYECTO' AND TABLE_NAME = '".$nombreTabla."'
+                                                ORDER BY TABLE_NAME
+                                            )tablas
+                                        where informacion_interna_tabla.TABLA = tablas.TABLE_NAME ");
+        if (!$stid) 
+        {
+            $e = oci_error($conexión);
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }
+
+        // Realizar la lógica de la consulta
+        $r = oci_execute($stid);
+        if (!$r) {
+            $e = oci_error($stid);
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }
+        oci_close($conexión);
+        return $stid;  
+    }
 ?>
