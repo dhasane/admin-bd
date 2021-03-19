@@ -12,9 +12,9 @@
         }
 
         // Preparar la sentencia
-        $stid = oci_parse($conexión, "  SELECT username, user_id
-                                        FROM DBA_USERS
-                                        WHERE default_tablespace='USUARIOS'");
+        $stid = oci_parse($conexión, "  SELECT *
+                                        FROM VISTA_USUARIOS
+                                        ");
         if (!$stid) 
         {
             $e = oci_error($conexión);
