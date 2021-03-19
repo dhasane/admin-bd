@@ -1,8 +1,69 @@
-select TABLE_NAME, OWNER
-from all_tables 
-where owner <>'USUARIO_1' and tablespace_name = 'TABLASPROYECTO'
-order by table_name;
+alter session set "_ORACLE_SCRIPT"=true;
+select privilege from user_sys_privs;
 
+
+CREATE USER ADMINI IDENTIFIED BY ADMINI DEFAULT TABLESPACE USUARIOSPROYECTO;
+GRANT ALL PRIVILEGES TO Administrador;
+GRANT EXECUTE ANY PROCEDURE TO Administrador;
+GRANT UNLIMITED TABLESPACE TO Administrador;
+
+--DROP TABLESPACE jobsProyecto;
+drop tablespace usuariosProyecto including contents and datafiles;
+DROP TABLESPACE tablasProyecto including contents and datafiles; 
+
+--create tablespace jobsProyecto DATAFILE 'C:\APP\PROXAR\PRODUCT\18.0.0\ORADATA\XE\jobsProyecto.DBF' SIZE 1M AUTOEXTEND ON;
+create tablespace usuariosProyecto DATAFILE 'C:\APP\PROXAR\PRODUCT\18.0.0\ORADATA\XE\usuariosProyecto.DBF' SIZE 1M AUTOEXTEND ON;
+create tablespace tablasProyecto DATAFILE 'C:\APP\PROXAR\PRODUCT\18.0.0\ORADATA\XE\tablasProyecto.DBF' SIZE 1M AUTOEXTEND ON;
+
+DROP ROLE GRUPOUSUARIO;
+CREATE ROLE GRUPOUSUARIO;
+
+--GRANT select on all_tables to GRUPOUSUARIO;
+GRANT CREATE SESSION TO GRUPOUSUARIO;
+GRANT CREATE TABLE to GRUPOUSUARIO;
+GRANT CREATE ANY JOB TO GRUPOUSUARIO;
+GRANT CREATE TABLESPACE to GRUPOUSUARIO;
+
+DROP USER usuario_1 CASCADE;
+DROP USER usuario_2 CASCADE;
+DROP USER usuario_3 CASCADE;
+DROP USER usuario_4 CASCADE;
+DROP USER usuario_5 CASCADE;
+DROP USER usuario_6 CASCADE;
+DROP USER usuario_7 CASCADE;
+
+CREATE USER USUARIO_1 IDENTIFIED BY USUARIO_1 DEFAULT TABLESPACE USUARIOSPROYECTO;
+CREATE USER USUARIO_2 IDENTIFIED BY USUARIO_2 DEFAULT TABLESPACE USUARIOSPROYECTO;
+CREATE USER USUARIO_3 IDENTIFIED BY USUARIO_3 DEFAULT TABLESPACE USUARIOSPROYECTO;
+CREATE USER USUARIO_4 IDENTIFIED BY USUARIO_4 DEFAULT TABLESPACE USUARIOSPROYECTO;
+CREATE USER USUARIO_5 IDENTIFIED BY USUARIO_5 DEFAULT TABLESPACE USUARIOSPROYECTO;
+CREATE USER USUARIO_6 IDENTIFIED BY USUARIO_6 DEFAULT TABLESPACE USUARIOSPROYECTO;
+CREATE USER USUARIO_7 IDENTIFIED BY USUARIO_7 DEFAULT TABLESPACE USUARIOSPROYECTO;
+CREATE USER USUARIO_9 IDENTIFIED BY USUARIO_7 DEFAULT TABLESPACE USUARIOSPROYECTO;
+CREATE USER USUARIO_9 IDENTIFIED BY USUARIO_8 DEFAULT TABLESPACE USUARIOSPROYECTO;
+
+GRANT grupousuario to usuario_1;  
+GRANT grupousuario to usuario_2;  
+GRANT grupousuario to usuario_3;  
+GRANT grupousuario to usuario_4;  
+GRANT grupousuario to usuario_5;  
+GRANT grupousuario to usuario_6;  
+GRANT grupousuario to usuario_7;  
+
+
+DROP TABLESPACE jobsProyecto;
+create tablespace jobsProyecto DATAFILE 'C:\APP\PROXAR\PRODUCT\18.0.0\ORADATA\XE\jobsProyecto.DBF' SIZE 1M AUTOEXTEND ON;
+
+--PERMISOS PARA CREAR TABLLESPACE
+
+drop view informacion_tabla;
+drop view permisos_usuario;
+drop view indices_tabla;
+drop view tabla_comentario;
+drop view restricciones_tabla;
+drop view col_nombre_tipo; 
+drop view columna_comentarios; 
+drop view informacion_interna_tabla; 
 
 CREATE OR REPLACE VIEW col_nombre_tipo AS
 	SELECT col.TABLE_NAME AS tabla, col.COLUMN_NAME AS columnas, col.data_type AS tipo
@@ -14,14 +75,11 @@ CREATE OR REPLACE VIEW columna_comentarios AS
 	FROM sys.all_tab_comments;
 	/
 
-
 CREATE OR REPLACE VIEW informacion_interna_tabla AS
 	SELECT col.tabla, col.columnas, col.tipo, com.comentario
 	FROM col_nombre_tipo col, columna_comentarios com
 	WHERE col.tabla = com.tabla;
 	/
-
------------------------------------------------------------------------------------------
 
 CREATE OR REPLACE VIEW restricciones_tabla AS
 	SELECT owner, CONSTRAINT_NAME AS restriccion, TABLE_NAME AS tabla
@@ -56,48 +114,11 @@ CREATE OR REPLACE VIEW informacion_tabla AS
 		ind.status,
 		ind.indexing
 	FROM restricciones_tabla res, tabla_comentario com, indices_tabla ind
-	WHERE res.tabla = com.tabla
-      AND res.tabla = ind.tabla
-      AND res.owner = ind.owner;
-    /
-
----------------------------------------------------------------------------
-
-CREATE OR REPLACE VIEW permisos_usuario_tabla AS
-    SELECT aa.TABLE_NAME AS tabla,
-           pr.grantor,
-           pr.grantee,
-           pr.privilege AS privilegio
-    FROM all_tables aa
-    LEFT JOIN sys.all_tab_privs pr ON aa.TABLE_NAME = pr.TABLE_NAME;
-    /
-
-
-CREATE OR REPLACE VIEW espacio_usuario_usado AS
-    SELECT TABLESPACE_NAME, SUM(BYTES) AS bytes, SUM(BLOCKS) AS bloques
-    FROM USER_SEGMENTS
-    GROUP BY TABLESPACE_NAME;
-    /
-    -- GROUP BY OWNER;
-
-CREATE OR REPLACE VIEW espacio_usuario_libre AS
-    SELECT TABLESPACE_NAME, SUM(BYTES) AS bytes, SUM(BLOCKS) AS bloques
-    FROM USER_FREE_SPACE
-    GROUP BY TABLESPACE_NAME;
-    /
-    -- GROUP BY OWNER;
-
-CREATE OR REPLACE VIEW espacio_usuario AS
-    SELECT usado.TABLESPACE_NAME,
-           usado.bytes AS bytes_usados,
-           usado.bloques AS bloques_usados,
-           libre.bytes AS bytes_libres,
-           libre.bloques AS bloques_libres
-    FROM espacio_usuario_usado usado, espacio_usuario_libre libre
-    WHERE usado.tablespace_name = libre.tablespace_name;
-    /
+	WHERE res.tabla = com.tabla AND res.tabla = ind.tabla AND res.owner = ind.owner;
 
 --------------------------------------------------------------------------------------------
+
+--SACAR LA TABLA ESPECIFICA CON SUS ATRIBUTOS
 select  informacion_interna_tabla.tabla,
         informacion_interna_tabla.columnas,
         informacion_interna_tabla.tipo,
@@ -111,123 +132,37 @@ from informacion_interna_tabla,
     )tablas
 where informacion_interna_tabla.TABLA = tablas.TABLE_NAME;
 
-SELECT owner, SUM(BYTES)/1024/1024 
-  FROM DBA_SEGMENTS
- GROUP BY owner;
-
-select owner
-from restricciones_tabla
-group by owner;
-
-drop view informacion_tabla;
-drop view permisos_usuario;
-drop view indices_tabla;
-
-drop view tabla_comentario;
-drop view restricciones_tabla;
-drop view col_nombre_tipo; 
-drop view columna_comentarios; 
-drop view informacion_interna_tabla; 
-
-
--- CREATE OR REPLACE VIEW informacion_tabla AS
--- 	SELECT col.tabla, col.columnas, col.tipo, col.comentario
--- 	FROM RESTRICCIONES_TABLA res, TABLA_COMENTARIO tab, CON_NOMBRE_TIPO_COMENTARIO col
--- 	WHERE res.tabla = tab.tabla AND res.tabla = com.tabla;
--- 	/
-
--- BEGIN
---    FOR R IN
---    (SELECT TABLE_NAME, OWNER FROM ALL_TABLES WHERE TABLESPACE_NAME = 'TABLASPROYECTO') LOOP
---       EXECUTE IMMEDIATE 'grant select on '||R.OWNER||'.'||R.TABLE_NAME||' to grupousuario';
---    END LOOP;
--- END;
-    
-
-GRANT grupousuario to usuario_1;  
-GRANT grupousuario to usuario_2;  
-GRANT grupousuario to usuario_3;  
-GRANT grupousuario to usuario_4;  
-GRANT grupousuario to usuario_5;  
-GRANT grupousuario to usuario_6;  
-
-GRANT select on all_tables to grupousuario;
-
-alter session set "_ORACLE_SCRIPT"=true;
-
-GRANT CREATE SESSION TO usuario_1;
-GRANT CREATE SESSION TO usuario_2;
-GRANT CREATE SESSION TO usuario_3;
-GRANT CREATE SESSION TO usuario_4;
-GRANT CREATE SESSION TO usuario_5;
-GRANT CREATE SESSION TO usuario_6;
-GRANT CREATE SESSION TO usuario_7;
-GRANT CREATE SESSION TO usuario_8;
-
-
-GRANT CREATE TABLE to usuario_1;
-GRANT CREATE TABLE to usuario_2;
-GRANT CREATE TABLE to usuario_3;
-GRANT CREATE TABLE to usuario_4;
-GRANT CREATE TABLE to usuario_5;
-GRANT CREATE TABLE to usuario_6;
-GRANT CREATE TABLE to usuario_7;
-GRANT CREATE TABLE to usuario_8;
-
-
+--SACAR LAS TABLAS DE UN TABLESPACE
 SELECT TABLE_NAME
 FROM ALL_TABLES
 WHERE TABLESPACE_NAME = 'TABLASPROYECTO'
 ORDER BY TABLE_NAME;
 
-
-
-BEGIN
-   FOR R IN
-   (SELECT TABLE_NAME, OWNER FROM ALL_TABLES WHERE TABLESPACE_NAME = 'TABLASPROYECTO') LOOP
-      EXECUTE IMMEDIATE 'grant select on '||R.OWNER||'.'||R.TABLE_NAME||' to grupousuario';
-   END LOOP;
-END;
-
-
-GRANT CREATE TABLESPACE to USUARIO_1;
-GRANT CREATE TABLESPACE to USUARIO_3;
-
-
-create tablespace jobsProyecto DATAFILE 'C:\APP\PROXAR\PRODUCT\18.0.0\ORADATA\XE\jobsProyecto.DBF' SIZE 1M AUTOEXTEND ON;
-
-GRANT CREATE ANY JOB TO usuario_1;
-GRANT CREATE ANY JOB TO usuario_2;
-GRANT CREATE ANY JOB TO usuario_3;
-GRANT CREATE ANY JOB TO usuario_4;
-GRANT CREATE ANY JOB TO usuario_5;
-
-BEGIN
-DBMS_SCHEDULER.DISABLE('MI_PRIMER_JOB_USUARIO_3');
-END;
-/
-
-BEGIN
-DBMS_SCHEDULER.ENABLE('MI_PRIMER_JOB_USUARIO_1');
-END;
-/
+--SACAR TABLAS Y SUS DUEÑOS
+select TABLE_NAME, OWNER
+from all_tables 
+where owner <>'USUARIO_1' and tablespace_name = 'TABLASPROYECTO'
+order by table_name;
 
 -- SACAR JOB, DUEÑO DEL JOB Y SI ESTÁ ACCTIVO O NO
-select owner, job_name, enabled 
-from all_scheduler_jobs, (
-    SELECT username
-    FROM DBA_USERS
-    WHERE default_tablespace='USUARIOS'
-) usuarios 
-where owner = usuarios.username;
+create or replace view vista_Jobs as
+    select owner, job_name, enabled 
+    from all_scheduler_jobs, (
+        SELECT username
+        FROM ALL_USERS
+    ) usuarios 
+    where owner = usuarios.username;
+
+SELECT *
+FROM vista_jobs;
 
 -- Sacar usuarios
-SELECT username, user_id
-FROM DBA_USERS
-WHERE default_tablespace='USUARIOS';
-
+create or replace view vista_usuarios as
+    SELECT username, user_id
+    FROM ALL_USERS;
 
 -- Sacar tablespaces y sus tamaños y eso
+
 Select t.tablespace_name,  
     ROUND(MAX(d.bytes)/1024/1024,2) AS Tamaño,
     ROUND((MAX(d.bytes)/1024/1024) - 
@@ -236,12 +171,7 @@ Select t.tablespace_name,
 FROM DBA_FREE_SPACE f, DBA_DATA_FILES d,  DBA_TABLESPACES t  
 WHERE t.tablespace_name = d.tablespace_name     AND 
     f.tablespace_name(+) = d.tablespace_name    AND 
-    f.file_id(+) = d.file_id                    and ( t.tablespace_name like '%PROYECTO%' 
-                                                or t.tablespace_name like '%USUARIOS%') 
-    GROUP BY t.tablespace_name,   
+    f.file_id(+) = d.file_id                    and ( t.tablespace_name like '%PROYECTO%') 
+GROUP BY t.tablespace_name,   
         d.file_name,   t.pct_increase, t.status 
-    ORDER BY 1,3 DESC;
-
-
-
-
+ORDER BY 1,3 DESC;
