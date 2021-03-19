@@ -22,6 +22,8 @@
         $str_datos = "";
         $str_datos.="<h1>Visualizar espacio de usuarios: ".$nombreUsuario." codigo: ".$idUsuario."</h1>";
         echo $str_datos;
+
+        echo "<a href='../pantallaInicio/pantallaInicio.php?idUsuario=".$idUsuario."&nombreUsuario=".$nombreUsuario."'>Volver</a><br><br>";
     ?>
 
   <div class="">

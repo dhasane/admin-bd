@@ -25,6 +25,21 @@ create table terceraTablaUsuario_2
 ) tablespace tablasProyecto;
 
 BEGIN
+DBMS_SCHEDULER.DROP_JOB('MI_PRIMER_JOB_USUARIO_2');
+END;
+/
+
+BEGIN
+DBMS_SCHEDULER.DROP_JOB('MI_SEGUNDO_JOB_USUARIO_2');
+END;
+/
+
+BEGIN
+DBMS_SCHEDULER.DROP_JOB('MI_TERCERO_JOB_USUARIO_2');
+END;
+/
+
+BEGIN
   DBMS_SCHEDULER.create_job (
     job_name        => 'MI_PRIMER_JOB_USUARIO_2',
     job_type        => 'PLSQL_BLOCK',

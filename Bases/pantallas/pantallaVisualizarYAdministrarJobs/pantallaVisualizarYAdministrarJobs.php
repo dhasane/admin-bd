@@ -16,12 +16,25 @@
 <body>
 
     <?php
-        $idUsuario = $_POST['idUsuario'];
-        $nombreUsuario = $_POST['nombreUsuario'];
+       
+
+        if(isset($_POST['idUsuario']) && isset($_POST['nombreUsuario']))
+        {
+            $idUsuario = $_POST['idUsuario'];
+            $nombreUsuario = $_POST['nombreUsuario'];
+        }
+        else
+        {
+            $idUsuario = $_GET['idUsuario'];
+            $nombreUsuario = $_GET['nombreUsuario'];
+        }
         
         $str_datos = "";
         $str_datos.="<h1>Visualizar y administrar jobs: ".$nombreUsuario." codigo: ".$idUsuario."</h1>";
         echo $str_datos;
+
+        echo "<a href='pantallaVisualizarYAdministrarJobs.php?idUsuario=".$idUsuario."&nombreUsuario=".$nombreUsuario."'>Actualizar</a><br><br>";
+        echo "<a href='../pantallaInicio/pantallaInicio.php?idUsuario=".$idUsuario."&nombreUsuario=".$nombreUsuario."'>Volver</a><br><br>";
     ?>
 
     <form action="pantallaVisualizarYAdministrarJobs.php" method="post">

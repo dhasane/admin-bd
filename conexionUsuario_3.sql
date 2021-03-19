@@ -1,6 +1,7 @@
 DROP TABLE PRIMERATABLAUSUARIO_3;
 DROP TABLE SEGUNDATABLAUSUARIO_3;
 DROP TABLE TERCERATABLAUSUARIO_3;
+DROP TABLE CUARTATABLAUSUARIO_3;
 
 create table primeraTablaUsuario_3
 (
@@ -23,6 +24,28 @@ create table terceraTablaUsuario_3
     cedula number NOT NULL,
     nombre varchar2(100)
 ) tablespace tablasProyecto;
+
+create table cuartaTablaUsuario_3
+(
+     id number primary key,
+    cedula number NOT NULL,
+    nombre varchar2(100)
+) tablespace tablasProyecto;
+
+BEGIN
+DBMS_SCHEDULER.DROP_JOB('MI_PRIMER_JOB_USUARIO_3');
+END;
+/
+
+BEGIN
+DBMS_SCHEDULER.DROP_JOB('MI_SEGUNDO_JOB_USUARIO_3');
+END;
+/
+
+BEGIN
+DBMS_SCHEDULER.DROP_JOB('MI_TERCERO_JOB_USUARIO_3');
+END;
+/
 
 BEGIN
   DBMS_SCHEDULER.create_job (
@@ -54,10 +77,5 @@ BEGIN
     start_date      => SYSTIMESTAMP,
     repeat_interval => 'freq=hourly; byminute=0; bysecond=0;',
     enabled         => TRUE);
-END;
-/
-
-BEGIN
-DBMS_SCHEDULER.DISABLE('MI_PRIMER_JOB_USUARIO_3');
 END;
 /

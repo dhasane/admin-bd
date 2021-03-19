@@ -22,6 +22,8 @@
         $str_datos = "";
         $str_datos.="<h1>Elementos que relacionados: ".$nombreUsuario." codigo: ".$idUsuario."</h1>";
         echo $str_datos;
+
+        echo "<a href='../pantallaInicio/pantallaInicio.php?idUsuario=".$idUsuario."&nombreUsuario=".$nombreUsuario."'>Volver</a><br><br>";
     ?>
 
 <table border='1' style="width:100%">

@@ -104,14 +104,8 @@
         }
 
         // Preparar la sentencia
-        $stid = oci_parse($conexión, "  SELECT owner, job_name, enabled 
-                                        FROM all_scheduler_jobs, 
-                                        (
-                                            SELECT username
-                                            FROM DBA_USERS
-                                            WHERE default_tablespace='USUARIOSPROYECTO'
-                                        ) usuarios 
-                                        WHERE owner = usuarios.username ");
+        $stid = oci_parse($conexión, "  SELECT *
+                                        FROM VISTA_JOBS ");
         if (!$stid) 
         {
             $e = oci_error($conexión);
@@ -148,9 +142,9 @@
                                         WHERE t.tablespace_name = d.tablespace_name     AND 
                                             f.tablespace_name(+) = d.tablespace_name    AND 
                                             f.file_id(+) = d.file_id                    and ( t.tablespace_name like '%PROYECTO%') 
-                                            GROUP BY t.tablespace_name,   
+                                        GROUP BY t.tablespace_name,   
                                                 d.file_name,   t.pct_increase, t.status 
-                                            ORDER BY 1,3 DESC ");
+                                        ORDER BY 1,3 DESC ");
         if (!$stid) 
         {
             $e = oci_error($conexión);

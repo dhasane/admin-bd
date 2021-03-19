@@ -9,10 +9,6 @@ create table primeraTablaUsuario_1
     nombre varchar2(100)
 ) tablespace tablasProyecto;
 
-
-DROP TABLE PRIMERATABLAUSUARIO_1;
-
-
 create table segundaTablaUsuario_1
 (
     id number primary key,
@@ -28,12 +24,20 @@ create table terceraTablaUsuario_1
     nombre varchar2(100)
 ) tablespace tablasProyecto;
 
-select * 
-from informacion_interna_tabla 
-where tabla = 'terceraTablaUsuario_5';
+BEGIN
+DBMS_SCHEDULER.DROP_JOB('MI_PRIMER_JOB_USUARIO_1');
+END;
+/
 
-select *
-from usuario_2;
+BEGIN
+DBMS_SCHEDULER.DROP_JOB('MI_SEGUNDO_JOB_USUARIO_1');
+END;
+/
+
+BEGIN
+DBMS_SCHEDULER.DROP_JOB('MI_TERCERO_JOB_USUARIO_1');
+END;
+/
 
 
 BEGIN
@@ -69,22 +73,11 @@ BEGIN
 END;
 /
 
-BEGIN
-DBMS_SCHEDULER.DROP_JOB ('MI_PRIMER_JOB');
-END;
-/
 
-select * from dba_jobs;
-
+-- SACAR JOB, DUEÑO DEL JOB Y SI ESTÁ ACCTIVO O NO
 select owner, job_name, enabled 
-from all_scheduler_jobs;
-
-
-create tablespace UsuariosProyecto DATAFILE 'C:\APP\PROXAR\PRODUCT\18.0.0\ORADATA\XE\UsuariosProyecto.DBF' SIZE 1M AUTOEXTEND ON;
-
-
-
-
-select *
-from user_constraints 
-where table_name = 'PRIMERATABLAUSUARIO_1';
+from all_scheduler_jobs, (
+    SELECT username
+    FROM ALL_USERS
+) usuarios 
+where owner = usuarios.username;
