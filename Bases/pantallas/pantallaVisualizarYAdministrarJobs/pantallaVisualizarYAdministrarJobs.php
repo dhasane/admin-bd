@@ -88,7 +88,6 @@
                     {
                         if($_POST['nombreUsuario'] == $_POST['dueñoJob'.$m])
                         {
-                            echo "entra al if exitoso activar  ".$_POST['nombreJob'.$m];
                             $respuesta = activar_job($_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
                         }
                         else
@@ -100,7 +99,6 @@
                     {
                         if($_POST['nombreUsuario'] == $_POST['dueñoJob'.$m])
                         {
-                            echo "entra al if exitoso desactivar  ".$_POST['nombreJob'.$m];
                             $respuesta = desactivar_job($_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
                         }
                         else
