@@ -22,7 +22,7 @@ DROP USER usuario_7 CASCADE;
 DROP USER usuario_8 CASCADE;
 DROP USER usuario_9 CASCADE;
 
-DROP USER admin_user CASCADE;
+DROP USER adm CASCADE;
 
 -- vistas ---------------------------------------------------------------------
 
@@ -218,24 +218,11 @@ GRANT grupousuario to usuario_6;
 GRANT grupousuario to usuario_7;
 
 -- admin ----------------------------------------------------------------------
-CREATE USER admin_user IDENTIFIED BY admin_user DEFAULT TABLESPACE USUARIOSPROYECTO;
+CREATE USER adm IDENTIFIED BY adm DEFAULT TABLESPACE USUARIOSPROYECTO;
 
--- estos dan problemas
--- GRANT SELECT ON col_nombre_tipo TO admin_user;
--- GRANT SELECT ON columna_comentarios TO admin_user;
--- GRANT SELECT ON informacion_interna_tabla TO admin_user;
--- GRANT SELECT ON restricciones_tabla TO admin_user;
--- GRANT SELECT ON tabla_comentario TO admin_user;
--- GRANT SELECT ON indices_tabla TO admin_user;
--- GRANT SELECT ON informacion_tabla TO admin_user;
--- GRANT SELECT ON permisos_usuario_tabla TO admin_user;
--- GRANT SELECT ON espacio_usuario_usado TO admin_user;
--- GRANT SELECT ON espacio_usuario_libre TO admin_user;
--- GRANT SELECT ON espacio_usuario TO admin_user;
-
-GRANT ALL PRIVILEGES TO admin_user;
-GRANT EXECUTE ANY PROCEDURE TO admin_user;
-GRANT UNLIMITED TABLESPACE TO admin_user;
+GRANT ALL PRIVILEGES TO adm;
+GRANT EXECUTE ANY PROCEDURE TO adm;
+GRANT UNLIMITED TABLESPACE TO adm;
 
 
 --SACAR LA TABLA ESPECIFICA CON SUS ATRIBUTOS
