@@ -52,14 +52,19 @@ CREATE OR REPLACE VIEW informacion_tabla AS
 		ind.status,
 		ind.indexing
 	FROM restricciones_tabla res, tabla_comentario com, indices_tabla ind
-	WHERE res.tabla = com.tabla AND res.tabla = ind.tabla AND res.owner = ind.owner;
+	WHERE res.tabla = com.tabla
+      AND res.tabla = ind.tabla
+      AND res.owner = ind.owner;
 
 --------------------------------------------------------------------------------------------
 
-CREATE OR REPLACE VIEW permisos_usuario AS
-	select grantor, grantee AS usuario, TABLE_NAME AS tabla, privilege AS privilegio
-	from sys.all_tab_privs ;
-
+CREATE OR REPLACE VIEW permisos_usuario_tabla AS
+    select aa.TABLE_NAME AS tabla,
+           pr.grantor,
+           pr.grantee,
+           pr.privilege AS privilegio
+    from all_tables aa
+    LEFT JOIN sys.all_tab_privs pr on aa.table_name = pr.TABLE_NAME;
 
 -- CREATE OR REPLACE VIEW informacion_tabla AS
 -- 	SELECT col.tabla, col.columnas, col.tipo, col.comentario
