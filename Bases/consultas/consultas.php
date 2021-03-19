@@ -15,6 +15,7 @@
         $stid = oci_parse($conexión, "  SELECT *
                                         FROM VISTA_USUARIOS
                                         ");
+
         if (!$stid) 
         {
             $e = oci_error($conexión);
@@ -108,7 +109,7 @@
                                         (
                                             SELECT username
                                             FROM DBA_USERS
-                                            WHERE default_tablespace='USUARIOS'
+                                            WHERE default_tablespace='USUARIOSPROYECTO'
                                         ) usuarios 
                                         WHERE owner = usuarios.username ");
         if (!$stid) 
@@ -146,8 +147,7 @@
                                         FROM DBA_FREE_SPACE f, DBA_DATA_FILES d,  DBA_TABLESPACES t  
                                         WHERE t.tablespace_name = d.tablespace_name     AND 
                                             f.tablespace_name(+) = d.tablespace_name    AND 
-                                            f.file_id(+) = d.file_id                    and ( t.tablespace_name like '%PROYECTO%' 
-                                                                                        or t.tablespace_name like '%USUARIOS%') 
+                                            f.file_id(+) = d.file_id                    and ( t.tablespace_name like '%PROYECTO%') 
                                             GROUP BY t.tablespace_name,   
                                                 d.file_name,   t.pct_increase, t.status 
                                             ORDER BY 1,3 DESC ");
