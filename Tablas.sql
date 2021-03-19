@@ -80,23 +80,6 @@ CREATE TABLE Pacientes
 ) tablespace tablasProyecto;
  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 --Alters
 ALTER TABLE Habitaciones ADD CONSTRAINT numero_habitacion_pk PRIMARY KEY (numero_hab);
 ALTER TABLE Camas ADD CONSTRAINT numero_camas_pk PRIMARY KEY (numero);
