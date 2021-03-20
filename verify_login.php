@@ -14,7 +14,4 @@ if ($log != "") {
     var_dump($log);
     $_SESSION['login'] = $log;
 }
-
-
-
 ?>
