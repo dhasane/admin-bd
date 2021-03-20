@@ -15,5 +15,7 @@ if ($log != "") {
     $_SESSION['password'] = $pass;
     var_dump($log);
     header("Location: ./index.php");
+} else {
+    header("Location: ./login.php");
 }
 ?>

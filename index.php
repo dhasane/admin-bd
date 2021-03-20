@@ -29,7 +29,7 @@ if (!isset($_SESSION['login'])) {
     </div>
 
     <form method="post">
-        <input type="submit" name="log out" id="logoutbtn" value="RUN" /><br />
+        <input type="submit" name="logoutbtn" id="logoutbtn" value="log out" /><br />
     </form>
 
 
