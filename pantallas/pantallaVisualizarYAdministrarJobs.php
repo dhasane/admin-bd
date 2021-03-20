@@ -51,7 +51,22 @@ if(!isset($_SESSION['login'])) {
             <tr>
                 <th>Dueño job</th>
                 <th>Nombre job</th>
+                <th>Job class</th>
+                <th>Comments</th>
+                <th>Credential name</th>
+                <th>Destination</th>
+                <th>Program name</th>
+                <th>Job type</th>
+                <th>Job action</th>
+                <th>Number of arguments</th>
+                <th>Shedule owner</th>
+                <th>Shedule name</th>
+                <th>Shedule type</th>
+                <th>Start date</th>
+                <th>Repeat intervale</th>
+                <th>End date</th>
                 <th>Activo</th>
+
                 <th>Activar</th>
                 <th>Desactivar</th>
             </tr>
@@ -66,7 +81,22 @@ if(!isset($_SESSION['login'])) {
                     echo "<tr>\n";
                         echo "<td>".$fila['OWNER']."</td>";
                         echo "<td>".$fila['JOB_NAME']."</td>";
+                        echo "<td>".$fila['JOB_CLASS']."</td>";
+                        echo "<td>".$fila['COMMENTS']."</td>";
+                        echo "<td>".$fila['CREDENTIAL_NAME']."</td>";
+                        echo "<td>".$fila['DESTINATION']."</td>";
+                        echo "<td>".$fila['PROGRAM_NAME']."</td>";
+                        echo "<td>".$fila['JOB_TYPE']."</td>";
+                        echo "<td>".$fila['JOB_ACTION']."</td>";
+                        echo "<td>".$fila['NUMBER_OF_ARGUMENTS']."</td>";
+                        echo "<td>".$fila['SCHEDULE_OWNER']."</td>";
+                        echo "<td>".$fila['SCHEDULE_NAME']."</td>";
+                        echo "<td>".$fila['SCHEDULE_TYPE']."</td>";
+                        echo "<td>".$fila['START_DATE']."</td>";
+                        echo "<td>".$fila['REPEAT_INTERVAL']."</td>";
+                        echo "<td>".$fila['END_DATE']."</td>";
                         echo "<td>".$fila['ENABLED']."</td>";
+
                         if( $fila['ENABLED'] == 'TRUE' )
                         {
                             echo "<td><input type='text'  name='opcionText' value='Desactivar'/></td>";
