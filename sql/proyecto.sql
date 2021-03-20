@@ -111,7 +111,7 @@ CREATE OR REPLACE VIEW indices_tabla AS
 		distinct_keys,
 		status,
 		indexing
-	from ALL_INDEXES;
+	from SYS.DBA_INDEXES;
 	/
 
 CREATE OR REPLACE VIEW informacion_tabla AS
@@ -186,7 +186,6 @@ CREATE OR REPLACE VIEW vista_todas_las_tablas AS
     SELECT TABLE_NAME, OWNER
     FROM DBA_TABLES
     ORDER BY TABLE_NAME;
-
 
 CREATE OR REPLACE VIEW vista_espacio_tablespace AS
     SELECT t.tablespace_name,
