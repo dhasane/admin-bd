@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 include_once 'configuracion.php';
 
 function generar_conexion($usuario, $pass)
@@ -29,9 +29,9 @@ function lista_Usuarios()
     // Preparar la sentencia
     $stid = oci_parse(
         $conexion,
-        "SELECT *
-        FROM VISTA_USUARIOS;
-        ");
+                    "SELECT *
+                    FROM VISTA_USUARIOS
+                    ");
 
     if (!$stid)
     {
@@ -93,10 +93,10 @@ function lista_tablas_usuario_no_propietario($nombreUsuario)
     // Preparar la sentencia
     $stid = oci_parse(
         $conexion,
-        "  SELECT TABLE_NAME, OWNER
-        FROM ALL_TABLES
-        WHERE owner <> '".$nombreUsuario."' and TABLESPACE_NAME = 'TABLASPROYECTO'
-        ORDER BY TABLE_NAME ");
+        "       SELECT TABLE_NAME, OWNER
+                FROM ALL_TABLES
+                WHERE owner <> '".$nombreUsuario."' and TABLESPACE_NAME = 'TABLASPROYECTO'
+                ORDER BY TABLE_NAME ");
     if (!$stid)
     {
         $e = oci_error($conexion);

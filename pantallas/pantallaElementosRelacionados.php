@@ -32,7 +32,7 @@ if(!isset($_SESSION['login'])) {
     $str_datos .= "<h1>Elementos que relacionados: " . $nombreUsuario . " codigo: " . $idUsuario . "</h1>";
     echo $str_datos;
 
-    echo "<a href='../pantallaInicio/pantallaInicio.php?idUsuario=" . $idUsuario . "&nombreUsuario=" . $nombreUsuario . "'>Volver</a><br><br>";
+    echo "<a href='pantallaInicio.php?idUsuario=" . $idUsuario . "&nombreUsuario=" . $nombreUsuario . "'>Volver</a><br><br>";
     ?>
 
     <table border='1' style="width:100%">
@@ -46,7 +46,7 @@ if(!isset($_SESSION['login'])) {
         </thead>
         <tbody>
             <?php
-            include_once dirname(__FILE__) . '../../../consultas/consultas.php';
+            include_once $_SERVER['DOCUMENT_ROOT'] . '/admin-bd/consultas.php';
             $tablas = lista_tablas_usuario_no_propietario($nombreUsuario);
 
             while ($fila = oci_fetch_array($tablas, OCI_ASSOC + OCI_RETURN_NULLS)) {

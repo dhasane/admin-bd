@@ -32,7 +32,7 @@ if(!isset($_SESSION['login'])) {
         $str_datos.="<h1>Paquetes, funciones y procedimiento: ".$nombreUsuario." codigo: ".$idUsuario."</h1>";
         echo $str_datos;
 
-        echo "<a href='../pantallaInicio/pantallaInicio.php?idUsuario=".$idUsuario."&nombreUsuario=".$nombreUsuario."'>Volver</a><br><br>";
+        echo "<a href='pantallaInicio.php?idUsuario=".$idUsuario."&nombreUsuario=".$nombreUsuario."'>Volver</a><br><br>";
     ?>
 
   <div class="">

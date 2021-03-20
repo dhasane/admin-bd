@@ -32,7 +32,7 @@ if(!isset($_SESSION['login'])) {
         $str_datos.="<h1>Bienvenido usuario: ".$nombreUsuario." codigo: ".$idUsuario."</h1>";
         echo $str_datos;
 
-        echo "<a href='../../index.php?idUsuario=".$idUsuario."&nombreUsuario=".$nombreUsuario."'>Volver</a><br>";
+        echo "<a href='../index.php?idUsuario=".$idUsuario."&nombreUsuario=".$nombreUsuario."'>Volver</a><br>";
     ?>
 
     <h2>Por favor seleccione la operación que desea realizar</h2>
@@ -41,7 +41,7 @@ if(!isset($_SESSION['login'])) {
     <h2>Operaciones de usuario</h2>
 
     <div class="ElementosQueLePertenecen">
-        <form action="../pantallaElementosQueLePertenecen/pantallaElementosQueLePertenecen.php" method="post">
+        <form action="pantallaElementosQueLePertenecen.php" method="post">
         
         <?php
             echo "<input type='hidden' name='idUsuario' value=".$idUsuario.">";
@@ -54,7 +54,7 @@ if(!isset($_SESSION['login'])) {
     </div>
 
     <div class="ElementosRelacionados">
-        <form action="../pantallaElementosRelacionados/pantallaElementosRelacionados.php" method="post">
+        <form action="pantallaElementosRelacionados.php" method="post">
         
         <?php
             echo "<input type='hidden' name='idUsuario' value=".$idUsuario.">";
@@ -67,7 +67,7 @@ if(!isset($_SESSION['login'])) {
     </div>
 
     <div class="PFP">
-        <form action="../pantallaPFP/pantallaPFP.php" method="post">
+        <form action="pantallaPFP.php" method="post">
         
         <?php
             echo "<input type='hidden' name='idUsuario' value=".$idUsuario.">";
@@ -84,7 +84,7 @@ if(!isset($_SESSION['login'])) {
     <h2>Operaciones de base de datos</h2>
 
     <div class="VisualizarYAdministrarJobs">
-        <form action="../pantallaVisualizarYAdministrarJobs/pantallaVisualizarYAdministrarJobs.php" method="post">
+        <form action="pantallaVisualizarYAdministrarJobs.php" method="post">
         
         <?php
             echo "<input type='hidden' name='idUsuario' value=".$idUsuario.">";
@@ -97,7 +97,7 @@ if(!isset($_SESSION['login'])) {
     </div>
 
     <div class="VisualizarTableSpace">
-        <form action="../pantallaVisualizarTableSpace/pantallaVisualizarTableSpace.php" method="post">
+        <form action="pantallaVisualizarTableSpace.php" method="post">
         
         <?php
             echo "<input type='hidden' name='idUsuario' value=".$idUsuario.">";
@@ -110,7 +110,7 @@ if(!isset($_SESSION['login'])) {
     </div>
 
     <div class="VisualizarEspacioDeUsuarios">
-        <form action="../pantallaVisualizarEspacioDeUsuarios/pantallaVisualizarEspacioDeUsuarios.php" method="post">
+        <form action="pantallaVisualizarEspacioDeUsuarios.php" method="post">
         
         <?php
             echo "<input type='hidden' name='idUsuario' value=".$idUsuario.">";

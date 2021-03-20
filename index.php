@@ -21,6 +21,8 @@ if(!isset($_SESSION['login'])) {
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet">
     
+
+
     <title>Inicio</title> 
     
 </head>
@@ -49,14 +51,12 @@ if(!isset($_SESSION['login'])) {
                 echo "<tr>\n";
                     echo "<td>".$fila['USER_ID']."</td>";
                     echo "<td>".$fila['USERNAME']."</td>";
-                    echo "<td><a href='pantallas/pantallaInicio/pantallaInicio.php?idUsuario=".$fila['USER_ID']."&nombreUsuario=".$fila['USERNAME']."'>seleccionar</td>\n";
+                    echo "<td><a href='pantallas/pantallaInicio.php?idUsuario=".$fila['USER_ID']."&nombreUsuario=".$fila['USERNAME']."'>seleccionar</td>\n";
                 echo "</tr>\n";
             }
             ?>
         </tbody>
     </table>
-
-
 </body>
 
 </html>

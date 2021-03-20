@@ -12,8 +12,8 @@ $log = generar_conexion($user, $pass);
 
 if ($log != "") {
     $_SESSION['login'] = $user;
-    $_SESSION['password'] = $password;
+    $_SESSION['password'] = $pass;
     var_dump($log);
-   // header("Location: ./index.php");
+    header("Location: ./index.php");
 }
 ?>

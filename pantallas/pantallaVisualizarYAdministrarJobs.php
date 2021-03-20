@@ -43,7 +43,7 @@ if(!isset($_SESSION['login'])) {
         echo $str_datos;
 
         echo "<a href='pantallaVisualizarYAdministrarJobs.php?idUsuario=".$idUsuario."&nombreUsuario=".$nombreUsuario."'>Actualizar</a><br><br>";
-        echo "<a href='../pantallaInicio/pantallaInicio.php?idUsuario=".$idUsuario."&nombreUsuario=".$nombreUsuario."'>Volver</a><br><br>";
+        echo "<a href='pantallaInicio.php?idUsuario=".$idUsuario."&nombreUsuario=".$nombreUsuario."'>Volver</a><br><br>";
     ?>
 
     <form action="pantallaVisualizarYAdministrarJobs.php" method="post">
@@ -57,7 +57,7 @@ if(!isset($_SESSION['login'])) {
             </tr>
 
             <?php
-                include_once dirname(__FILE__) . '../../../consultas/consultas.php';
+                include_once $_SERVER['DOCUMENT_ROOT'] . '/admin-bd/consultas.php';
                 $tablas = jobs_por_usuario();
 
                 $n = 0;
