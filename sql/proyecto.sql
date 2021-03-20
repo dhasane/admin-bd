@@ -76,12 +76,12 @@ create tablespace jobsProyecto
 -- informacion interna tabla --------------------------------------------------
 CREATE OR REPLACE VIEW col_nombre_tipo AS
 	SELECT col.TABLE_NAME AS tabla, col.COLUMN_NAME AS columnas, col.data_type AS tipo
-	FROM sys.all_tab_columns col;
+	FROM sys.dba_tab_columns col;
 	/
 
 CREATE OR REPLACE VIEW columna_comentarios AS
 	SELECT TABLE_NAME AS tabla, comments AS comentario
-	FROM sys.all_tab_comments;
+	FROM sys.dba_tab_comments;
 	/
 
 CREATE OR REPLACE VIEW informacion_interna_tabla AS
@@ -94,12 +94,12 @@ CREATE OR REPLACE VIEW informacion_interna_tabla AS
 
 CREATE OR REPLACE VIEW restricciones_tabla AS
 	SELECT owner, CONSTRAINT_NAME AS restriccion, TABLE_NAME AS tabla
-	FROM sys.ALL_CONSTRAINTS;
+	FROM SYS.DBA_CONSTRAINTS;
 	/
 
 CREATE OR REPLACE VIEW tabla_comentario AS
 	SELECT com.TABLE_NAME AS tabla, com.comments AS tabla_comentario
-	FROM sys.all_tab_comments com;
+	FROM SYS.DBA_TAB_COMMENTS com;
 	/
 
 CREATE OR REPLACE VIEW indices_tabla AS
@@ -115,15 +115,14 @@ CREATE OR REPLACE VIEW indices_tabla AS
 	/
 
 CREATE OR REPLACE VIEW informacion_tabla AS
-	SELECT
-		res.tabla,
-		res.owner,
-		res.restriccion,
-		com.tabla_comentario,
-		ind.indice,
-		ind.tablespace,
-		ind.status,
-		ind.indexing
+	SELECT res.tabla,
+		   res.owner,
+		   res.restriccion,
+		   com.tabla_comentario,
+		   ind.indice,
+		   ind.tablespace,
+		   ind.status,
+		   ind.indexing
 	FROM restricciones_tabla res, tabla_comentario com, indices_tabla ind
 	WHERE res.tabla = com.tabla
       AND res.tabla = ind.tabla
@@ -179,30 +178,51 @@ create or replace view vista_Jobs as
 -- utiles ---------------------------------------------------------------------
 
 -- Sacar usuarios
-create or replace view vista_usuarios as
+CREATE OR REPLACE VIEW vista_usuarios AS
     SELECT username, user_id
     FROM ALL_USERS;
 
 CREATE OR REPLACE VIEW vista_todas_las_tablas AS
     SELECT TABLE_NAME, OWNER
     FROM DBA_TABLES
-    WHERE TABLESPACE_NAME = 'TABLASPROYECTO'
     ORDER BY TABLE_NAME;
 
-GRANT SELECT ON col_nombre_tipo TO PUBLIC;
-GRANT SELECT ON columna_comentarios TO PUBLIC;
-GRANT SELECT ON informacion_interna_tabla TO PUBLIC;
-GRANT SELECT ON restricciones_tabla TO PUBLIC;
-GRANT SELECT ON tabla_comentario TO PUBLIC;
-GRANT SELECT ON indices_tabla TO PUBLIC;
-GRANT SELECT ON informacion_tabla TO PUBLIC;
-GRANT SELECT ON permisos_usuario_tabla TO PUBLIC;
-GRANT SELECT ON espacio_usuario_usado TO PUBLIC;
-GRANT SELECT ON espacio_usuario_libre TO PUBLIC;
-GRANT SELECT ON espacio_usuario TO PUBLIC;
-GRANT SELECT ON vista_Jobs TO PUBLIC;
-GRANT SELECT ON vista_usuarios TO PUBLIC;
-GRANT SELECT ON vista_todas_las_tablas TO PUBLIC;
+
+CREATE OR REPLACE VIEW vista_espacio_tablespace AS
+    SELECT t.tablespace_name,
+           ROUND(MAX(d.bytes)/1024/1024,2) AS Tam,
+           ROUND((MAX(d.bytes)/1024/1024) -
+           (SUM(decode(f.bytes, NULL,0, f.bytes))/1024/1024),2) AS Usados,
+           ROUND(SUM(decode(f.bytes, NULL,0, f.bytes))/1024/1024,2) AS Libres
+    FROM DBA_FREE_SPACE f, DBA_DATA_FILES d,  DBA_TABLESPACES t
+    WHERE t.tablespace_name = d.tablespace_name
+      AND f.tablespace_name(+) = d.tablespace_name
+      AND f.file_id(+) = d.file_id
+      AND ( t.tablespace_name like '%PROYECTO%')
+    GROUP BY t.tablespace_name, d.file_name, t.pct_increase, t.status
+    ORDER BY 1,3 DESC;
+
+
+GRANT SELECT ON SYS.USER_FREE_SPACE TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON SYS.USER_SEGMENTS TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON SYS.ALL_TABLES TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON SYS.ALL_INDEXES TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON SYS.ALL_TAB_COMMENTS TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON col_nombre_tipo TO PUBLIC with grant option;
+GRANT SELECT ON columna_comentarios TO PUBLIC WITH GRANT option;
+GRANT SELECT ON informacion_interna_tabla TO PUBLIC WITH GRANT option;
+GRANT SELECT ON restricciones_tabla TO PUBLIC WITH GRANT option;
+GRANT SELECT ON tabla_comentario TO PUBLIC WITH GRANT option;
+GRANT SELECT ON indices_tabla TO PUBLIC WITH GRANT option;
+GRANT SELECT ON informacion_tabla TO PUBLIC WITH GRANT option;
+GRANT SELECT ON permisos_usuario_tabla TO PUBLIC WITH GRANT option;
+GRANT SELECT ON espacio_usuario_usado TO PUBLIC WITH GRANT option;
+GRANT SELECT ON espacio_usuario_libre TO PUBLIC WITH GRANT option;
+GRANT SELECT ON espacio_usuario TO PUBLIC WITH GRANT option;
+GRANT SELECT ON vista_Jobs TO PUBLIC WITH GRANT option;
+GRANT SELECT ON vista_usuarios TO PUBLIC WITH GRANT option;
+GRANT SELECT ON vista_todas_las_tablas TO PUBLIC WITH GRANT option;
+GRANT SELECT ON vista_espacio_tablespace TO PUBLIC WITH GRANT option;
 
 -------------------------------------------------------------------------------
 --                               permisos grupo                              --
