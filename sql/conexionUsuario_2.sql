@@ -72,15 +72,3 @@ BEGIN
 END;
 /
 
-insert into primprimeratablausuario_2 values (1, 111111, 'PATRICA');
-
-BEGIN
- 
-  FOR numero IN 1..10
-  LOOP
-    insert into tablaTBS_1 values (5,'nombre_'||numero);
-  END LOOP;
- 
-END;
-
-

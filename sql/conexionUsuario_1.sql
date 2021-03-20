@@ -24,6 +24,15 @@ create table terceraTablaUsuario_1
     nombre varchar2(100)
 ) tablespace tablasProyecto;
 
+create table sustentacion
+(
+    id number primary key,
+    cedula number NOT NULL,
+    nombre varchar2(100)
+) tablespace tablasProyecto;
+
+GRANT CREATE TABLESPACE to GRUPOUSUARIO;
+
 BEGIN
 DBMS_SCHEDULER.DROP_JOB('MI_PRIMER_JOB_USUARIO_1');
 END;
@@ -38,6 +47,9 @@ BEGIN
 DBMS_SCHEDULER.DROP_JOB('MI_TERCERO_JOB_USUARIO_1');
 END;
 /
+
+
+
 
 
 BEGIN
@@ -74,15 +86,24 @@ END;
 /
 
 
--- SACAR JOB, DUEÑO DEL JOB Y SI ESTÁ ACCTIVO O NO
-select owner, job_name, enabled 
-from all_scheduler_jobs, (
-    SELECT username
-    FROM ALL_USERS
-) usuarios 
-where owner = usuarios.username;
+insert into primeratablausuario_1 values (1, 111111, 'PATRICA');
 
-SELECT *
-FROM SYS.permisos_usuario_tabla
-where tabla = 'PRIMERATABLAUSUARIO_1';
+BEGIN
+ 
+  FOR numero IN 1..10
+  LOOP
+    insert into primeratablausuario_1 values (5,11111, 'Patricia');
+  END LOOP;
+ 
+END;
+
+GRANT CREATE SESSION TO pepito;
+GRANT CREATE TABLE to pepito;
+GRANT CREATE ANY JOB TO pepito;
+GRANT CREATE TABLESPACE to pepito;
+
+
+alter session set "_ORACLE_SCRIPT"=true;
+
+create user pepito IDENTIFIED by pepito DEFAULT TABLESPACE USUARIOSPROYECTO;
 
