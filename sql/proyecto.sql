@@ -144,9 +144,9 @@ CREATE OR REPLACE VIEW permisos_usuario_tabla AS
 -- espacio usuario ------------------------------------------------------------
 
 CREATE OR REPLACE VIEW espacio_usuario_usado AS
-    SELECT TABLESPACE_NAME, SUM(BYTES) AS bytes, SUM(BLOCKS) AS bloques
+    SELECT OWNER, TABLESPACE_NAME, SUM(BYTES) AS bytes, SUM(BLOCKS) AS bloques
     FROM DBA_SEGMENTS
-    GROUP BY TABLESPACE_NAME;
+    GROUP BY OWNER, TABLESPACE_NAME;
     /
 
 CREATE OR REPLACE VIEW espacio_usuario_libre AS
