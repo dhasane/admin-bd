@@ -43,7 +43,7 @@ if(!isset($_SESSION['login'])) {
             <?php
             include_once 'consultas.php';
             include_once 'configuracion.php';
-            $usuarios = lista_Usuarios($GLOBAL['conexion']);
+            $usuarios = lista_Usuarios();
             while ($fila = oci_fetch_array($usuarios, OCI_ASSOC+OCI_RETURN_NULLS)) 
             {
                 echo "<tr>\n";

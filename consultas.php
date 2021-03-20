@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once 'configuracion.php';
 
 function generar_conexion($usuario, $pass)
@@ -15,15 +16,15 @@ function generar_conexion($usuario, $pass)
     return $conexion;
 }
 
-function lista_Usuarios($conexion)
+function lista_Usuarios()
 {
-    // $conexion = oci_connect($usuario, $pass, HOST_DB);
+    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
 
-    // if (!$conexion)
-    // {
-    //     $e = oci_error();
-    //     trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-    // }
+    if (!$conexion)
+    {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
 
     // Preparar la sentencia
     $stid = oci_parse(
@@ -48,15 +49,15 @@ function lista_Usuarios($conexion)
     return $stid;
 }
 
-function lista_tablas_usuario($conexion, $nombreUsuario)
+function lista_tablas_usuario($nombreUsuario)
 {
-    // $conexion = oci_connect(USUARIO_DB,USUARIO_PASS,HOST_DB);
+    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
 
-    // if (!$conexion)
-    // {
-    //     $e = oci_error();
-    //     trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-    // }
+    if (!$conexion)
+    {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
 
     // Preparar la sentencia
     $stid = oci_parse($conexion, "  SELECT TABLE_NAME
@@ -78,15 +79,16 @@ function lista_tablas_usuario($conexion, $nombreUsuario)
     return $stid;
 }
 
-function lista_tablas_usuario_no_propietario($conexion, $nombreUsuario)
+function lista_tablas_usuario_no_propietario($nombreUsuario)
 {
-    // $conexion = oci_connect(USUARIO_DB,USUARIO_PASS,HOST_DB);
 
-    // if (!$conexion)
-    // {
-    //     $e = oci_error();
-    //     trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-    // }
+    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
+
+    if (!$conexion)
+    {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
 
     // Preparar la sentencia
     $stid = oci_parse(
@@ -111,15 +113,16 @@ function lista_tablas_usuario_no_propietario($conexion, $nombreUsuario)
     return $stid;
 }
 
-function jobs_por_usuario($conexion)
+function jobs_por_usuario()
 {
-    // $conexion = oci_connect(USUARIO_DB,USUARIO_PASS,HOST_DB);
 
-    // if (!$conexion)
-    // {
-    //     $e = oci_error();
-    //     trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-    // }
+    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
+
+    if (!$conexion)
+    {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
 
     // Preparar la sentencia
     $stid = oci_parse($conexion, "  SELECT *
@@ -140,15 +143,16 @@ function jobs_por_usuario($conexion)
     return $stid;
 }
 
-function tablespaces($conexion)
+function tablespaces()
 {
-    // $conexion = oci_connect(USUARIO_DB,USUARIO_PASS,HOST_DB);
 
-    // if (!$conexion)
-    // {
-    //     $e = oci_error();
-    //     trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-    // }
+    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
+
+    if (!$conexion)
+    {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
 
     // Preparar la sentencia
     $stid = oci_parse($conexion, "  SELECT t.tablespace_name,
@@ -179,15 +183,16 @@ function tablespaces($conexion)
     return $stid;
 }
 
-function informacion_tabla($conexion, $nombreTabla)
+function informacion_tabla($nombreTabla)
 {
-    // $conexion = oci_connect(USUARIO_DB,USUARIO_PASS,HOST_DB);
 
-    // if (!$conexion)
-    // {
-    //     $e = oci_error();
-    //     trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-    // }
+    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
+
+    if (!$conexion)
+    {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
 
     // Preparar la sentencia
     $stid = oci_parse($conexion, "  SELECT  informacion_tabla.TABLA,
@@ -222,15 +227,16 @@ function informacion_tabla($conexion, $nombreTabla)
     return $stid;
 }
 
-function informacion_interna_tabla($conexion, $nombreTabla)
+function informacion_interna_tabla($nombreTabla)
 {
-    // $conexion = oci_connect(USUARIO_DB,USUARIO_PASS,HOST_DB);
 
-    // if (!$conexion)
-    // {
-    //     $e = oci_error();
-    //     trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-    // }
+    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
+
+    if (!$conexion)
+    {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
 
     // Preparar la sentencia
     $stid = oci_parse($conexion, "  SELECT  informacion_interna_tabla.tabla,
@@ -261,15 +267,16 @@ function informacion_interna_tabla($conexion, $nombreTabla)
     return $stid;
 }
 
-function activar_job($conexion, $nombreTabla)
+function activar_job($nombreTabla)
 {
-    // $conexion = oci_connect(USUARIO_DB,USUARIO_PASS,HOST_DB);
 
-    // if (!$conexion)
-    // {
-    //     $e = oci_error();
-    //     trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-    // }
+    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
+
+    if (!$conexion)
+    {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
 
     // Preparar la sentencia
     $stid = oci_parse($conexion, "  BEGIN
@@ -292,15 +299,16 @@ function activar_job($conexion, $nombreTabla)
     return true;
 }
 
-function desactivar_job($conexion, $nombreTabla)
+function desactivar_job($nombreTabla)
 {
-    // $conexion = oci_connect(USUARIO_DB,USUARIO_PASS,HOST_DB);
 
-    // if (!$conexion)
-    // {
-    //     $e = oci_error();
-    //     trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-    // }
+    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
+
+    if (!$conexion)
+    {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
 
     // Preparar la sentencia
     $stid = oci_parse($conexion, "  BEGIN

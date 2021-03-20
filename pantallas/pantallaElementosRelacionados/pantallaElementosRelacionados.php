@@ -4,8 +4,6 @@ session_start();
 
 if(!isset($_SESSION['login'])) {
     header("Location: ./login.php");
-} else {
-    $GLOBAL['conexion'] = $_SESSION['login'];
 }
 
 ?>
@@ -49,7 +47,7 @@ if(!isset($_SESSION['login'])) {
         <tbody>
             <?php
             include_once dirname(__FILE__) . '../../../consultas/consultas.php';
-            $tablas = lista_tablas_usuario_no_propietario($GLOBAL['conexion'], $nombreUsuario);
+            $tablas = lista_tablas_usuario_no_propietario($nombreUsuario);
 
             while ($fila = oci_fetch_array($tablas, OCI_ASSOC + OCI_RETURN_NULLS)) {
                 echo "<tr>\n";
@@ -89,7 +87,7 @@ if(!isset($_SESSION['login'])) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (isset($_POST['table_name'])) {
                     $table_name = $_POST['table_name'];
-                    $tablas = informacion_tabla($GLOBAL['conexion'], $table_name);
+                    $tablas = informacion_tabla($table_name);
 
                     while ($fila = oci_fetch_array($tablas, OCI_ASSOC + OCI_RETURN_NULLS)) {
                         echo "<tr>\n";
