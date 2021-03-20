@@ -18,7 +18,7 @@ function generar_conexion($usuario, $pass)
 
 function lista_Usuarios()
 {
-    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
+    $conexion = oci_connect($_SESSION['login'], $_SESSION['password'], HOST_DB);
 
     if (!$conexion)
     {
@@ -51,7 +51,7 @@ function lista_Usuarios()
 
 function lista_tablas_usuario($nombreUsuario)
 {
-    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
+    $conexion = oci_connect($_SESSION['login'], $_SESSION['password'], HOST_DB);
 
     if (!$conexion)
     {
@@ -82,7 +82,7 @@ function lista_tablas_usuario($nombreUsuario)
 function lista_tablas_usuario_no_propietario($nombreUsuario)
 {
 
-    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
+    $conexion = oci_connect($_SESSION['login'], $_SESSION['password'], HOST_DB);
 
     if (!$conexion)
     {
@@ -116,7 +116,7 @@ function lista_tablas_usuario_no_propietario($nombreUsuario)
 function jobs_por_usuario()
 {
 
-    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
+    $conexion = oci_connect($_SESSION['login'], $_SESSION['password'], HOST_DB);
 
     if (!$conexion)
     {
@@ -146,7 +146,7 @@ function jobs_por_usuario()
 function tablespaces()
 {
 
-    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
+    $conexion = oci_connect($_SESSION['login'], $_SESSION['password'], HOST_DB);
 
     if (!$conexion)
     {
@@ -186,7 +186,7 @@ function tablespaces()
 function informacion_tabla($nombreTabla)
 {
 
-    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
+    $conexion = oci_connect($_SESSION['login'], $_SESSION['password'], HOST_DB);
 
     if (!$conexion)
     {
@@ -230,7 +230,7 @@ function informacion_tabla($nombreTabla)
 function informacion_interna_tabla($nombreTabla)
 {
 
-    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
+    $conexion = oci_connect($_SESSION['login'], $_SESSION['password'], HOST_DB);
 
     if (!$conexion)
     {
@@ -270,7 +270,7 @@ function informacion_interna_tabla($nombreTabla)
 function activar_job($nombreTabla)
 {
 
-    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
+    $conexion = oci_connect($_SESSION['login'], $_SESSION['password'], HOST_DB);
 
     if (!$conexion)
     {
@@ -302,7 +302,7 @@ function activar_job($nombreTabla)
 function desactivar_job($nombreTabla)
 {
 
-    $conexion = oci_connect($_SESSION['user'], $_SESSION['password'], HOST_DB);
+    $conexion = oci_connect($_SESSION['login'], $_SESSION['password'], HOST_DB);
 
     if (!$conexion)
     {
