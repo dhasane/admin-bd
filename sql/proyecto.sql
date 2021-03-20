@@ -176,6 +176,36 @@ create or replace view vista_Jobs as
     ) usuarios
     where owner = usuarios.username;
 
+-- funciones -----------------------------------------------------------------------
+
+create or replace view vista_Funciones as
+    SELECT OBJECT_NAME 
+	FROM all_procedures, (
+        SELECT username
+        FROM ALL_USERS
+    ) usuarios
+    WHERE OBJECT_TYPE IN ('FUNCTION') AND owner = usuarios.username;
+
+-- procedimientos -----------------------------------------------------------------------
+
+create or replace view vista_Procedimientos as
+    SELECT OBJECT_NAME 
+	FROM all_procedures, (
+        SELECT username
+        FROM ALL_USERS
+    ) usuarios
+    WHERE OBJECT_TYPE IN ('PROCEDURE') AND owner = usuarios.username;
+
+-- paquetes -----------------------------------------------------------------------
+
+create or replace view vista_Paquetes as
+    SELECT OBJECT_NAME 
+	FROM all_procedures, (
+        SELECT username
+        FROM ALL_USERS
+    ) usuarios
+    WHERE OBJECT_TYPE IN ('PACKAGE') AND owner = usuarios.username;
+
 
 -- utiles ---------------------------------------------------------------------
 
@@ -287,22 +317,22 @@ GRANT UNLIMITED TABLESPACE TO adm;
 -- WHERE TABLESPACE_NAME = 'TABLASPROYECTO'
 -- ORDER BY TABLE_NAME;
 
---SACAR TABLAS Y SUS DUEÑOS
+--SACAR TABLAS Y SUS DUEï¿½OS
 -- select TABLE_NAME, OWNER
 -- from all_tables
 -- where owner <>'USUARIO_1' and tablespace_name = 'TABLASPROYECTO'
 -- order by table_name;
 
--- SACAR JOB, DUEÑO DEL JOB Y SI ESTÁ ACCTIVO O NO
+-- SACAR JOB, DUEï¿½O DEL JOB Y SI ESTï¿½ ACCTIVO O NO
 
 -- SELECT *
 -- FROM vista_jobs;
 
 
--- Sacar tablespaces y sus tamaños y eso
+-- Sacar tablespaces y sus tamaï¿½os y eso
 
 -- Select t.tablespace_name,
---     ROUND(MAX(d.bytes)/1024/1024,2) AS Tamaño,
+--     ROUND(MAX(d.bytes)/1024/1024,2) AS Tamaï¿½o,
 --     ROUND((MAX(d.bytes)/1024/1024) -
 --     (SUM(decode(f.bytes, NULL,0, f.bytes))/1024/1024),2) AS Usados,
 --     ROUND(SUM(decode(f.bytes, NULL,0, f.bytes))/1024/1024,2) AS Libres
