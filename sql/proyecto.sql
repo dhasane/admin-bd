@@ -176,7 +176,7 @@ create or replace view vista_Jobs as
     ) usuarios
     where owner = usuarios.username;
 
--- funciones -----------------------------------------------------------------------
+-- funciones ------------------------------------------------------------------
 
 create or replace view vista_Funciones as
     SELECT OBJECT_NAME 
@@ -186,7 +186,7 @@ create or replace view vista_Funciones as
     ) usuarios
     WHERE OBJECT_TYPE IN ('FUNCTION') AND owner = usuarios.username;
 
--- procedimientos -----------------------------------------------------------------------
+-- procedimientos -------------------------------------------------------------
 
 create or replace view vista_Procedimientos as
     SELECT OBJECT_NAME 
@@ -196,7 +196,7 @@ create or replace view vista_Procedimientos as
     ) usuarios
     WHERE OBJECT_TYPE IN ('PROCEDURE') AND owner = usuarios.username;
 
--- paquetes -----------------------------------------------------------------------
+-- paquetes -------------------------------------------------------------------
 
 create or replace view vista_Paquetes as
     SELECT OBJECT_NAME 
@@ -234,26 +234,29 @@ CREATE OR REPLACE VIEW vista_espacio_tablespace AS
     ORDER BY 1,3 DESC;
 
 
-GRANT SELECT ON SYS.USER_FREE_SPACE TO PUBLIC WITH GRANT OPTION;
-GRANT SELECT ON SYS.USER_SEGMENTS TO PUBLIC WITH GRANT OPTION;
-GRANT SELECT ON SYS.ALL_TABLES TO PUBLIC WITH GRANT OPTION;
-GRANT SELECT ON SYS.ALL_INDEXES TO PUBLIC WITH GRANT OPTION;
-GRANT SELECT ON SYS.ALL_TAB_COMMENTS TO PUBLIC WITH GRANT OPTION;
-GRANT SELECT ON col_nombre_tipo TO PUBLIC with grant option;
-GRANT SELECT ON columna_comentarios TO PUBLIC WITH GRANT option;
-GRANT SELECT ON informacion_interna_tabla TO PUBLIC WITH GRANT option;
-GRANT SELECT ON restricciones_tabla TO PUBLIC WITH GRANT option;
-GRANT SELECT ON tabla_comentario TO PUBLIC WITH GRANT option;
-GRANT SELECT ON indices_tabla TO PUBLIC WITH GRANT option;
-GRANT SELECT ON informacion_tabla TO PUBLIC WITH GRANT option;
-GRANT SELECT ON permisos_usuario_tabla TO PUBLIC WITH GRANT option;
-GRANT SELECT ON espacio_usuario_usado TO PUBLIC WITH GRANT option;
-GRANT SELECT ON espacio_usuario_libre TO PUBLIC WITH GRANT option;
-GRANT SELECT ON espacio_usuario TO PUBLIC WITH GRANT option;
-GRANT SELECT ON vista_Jobs TO PUBLIC WITH GRANT option;
-GRANT SELECT ON vista_usuarios TO PUBLIC WITH GRANT option;
-GRANT SELECT ON vista_todas_las_tablas TO PUBLIC WITH GRANT option;
-GRANT SELECT ON vista_espacio_tablespace TO PUBLIC WITH GRANT option;
+-- GRANT SELECT ON SYS.USER_FREE_SPACE TO PUBLIC WITH GRANT OPTION;
+-- GRANT SELECT ON SYS.USER_SEGMENTS TO PUBLIC WITH GRANT OPTION;
+-- GRANT SELECT ON SYS.ALL_TABLES TO PUBLIC WITH GRANT OPTION;
+-- GRANT SELECT ON SYS.ALL_INDEXES TO PUBLIC WITH GRANT OPTION;
+-- GRANT SELECT ON SYS.ALL_TAB_COMMENTS TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON col_nombre_tipo TO PUBLIC with grant OPTION;
+GRANT SELECT ON columna_comentarios TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON informacion_interna_tabla TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON restricciones_tabla TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON tabla_comentario TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON indices_tabla TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON informacion_tabla TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON permisos_usuario_tabla TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON espacio_usuario_usado TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON espacio_usuario_libre TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON espacio_usuario TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON vista_Jobs TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON vista_usuarios TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON vista_todas_las_tablas TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON vista_espacio_tablespace TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON vista_Funciones TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON vista_Procedimientos TO PUBLIC WITH GRANT OPTION;
+GRANT SELECT ON vista_Paquetes TO PUBLIC WITH GRANT OPTION;
 
 -------------------------------------------------------------------------------
 --                               permisos grupo                              --
