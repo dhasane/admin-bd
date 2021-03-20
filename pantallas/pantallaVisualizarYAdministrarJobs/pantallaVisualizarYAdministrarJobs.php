@@ -1,3 +1,12 @@
+<?php
+
+if(!isset($_SESSION['login'])) {
+    header("Location: ./login.php");
+} else {
+    $conexion = $_SESSION['login'];
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,7 +58,7 @@
 
             <?php
                 include_once dirname(__FILE__) . '../../../consultas/consultas.php';
-                $tablas = jobs_por_usuario();
+                $tablas = jobs_por_usuario($conexion);
 
                 $n = 0;
                 while ($fila = oci_fetch_array($tablas, OCI_ASSOC+OCI_RETURN_NULLS)) 
@@ -101,22 +110,22 @@
                     {
                         if($_POST['nombreUsuario'] == $_POST['dueñoJob'.$m])
                         {
-                            $respuesta = activar_job($_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
+                            $respuesta = activar_job($conexion, $_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
                         }
                         else
                         {
-                            $respuesta = activar_job($_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
+                            $respuesta = activar_job($conexion, $_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
                         }
                     }
                     elseif( $_POST['opcion'.$m] == 'Desactivar' )
                     {
                         if($_POST['nombreUsuario'] == $_POST['dueñoJob'.$m])
                         {
-                            $respuesta = desactivar_job($_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
+                            $respuesta = desactivar_job($conexion, $_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
                         }
                         else
                         {
-                            $respuesta = desactivar_job($_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
+                            $respuesta = desactivar_job($conexion, $_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
                         }
                     }
                 }   
