@@ -126,6 +126,7 @@ CREATE OR REPLACE VIEW informacion_tabla AS
 	FROM restricciones_tabla res, tabla_comentario com, indices_tabla ind
 	WHERE res.tabla = com.tabla
       AND res.tabla = ind.tabla
+      AND res.tabla = com.tabla
       AND res.owner = ind.owner;
     /
 
