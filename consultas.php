@@ -29,9 +29,8 @@ function lista_Usuarios()
     // Preparar la sentencia
     $stid = oci_parse(
         $conexion,
-                    "SELECT *
-                    FROM VISTA_USUARIOS
-                    ");
+        "SELECT *
+         FROM SYS.VISTA_USUARIOS ");
 
     if (!$stid)
     {
@@ -60,9 +59,11 @@ function lista_tablas_usuario($nombreUsuario)
     }
 
     // Preparar la sentencia
-    $stid = oci_parse($conexion, "  SELECT TABLE_NAME
-                                        FROM ALL_TABLES
-                                        WHERE owner = '".$nombreUsuario."'");
+    $stid = oci_parse(
+        $conexion,
+        "SELECT TABLE_NAME
+         FROM SYS.ALL_TABLES
+         WHERE owner = '".$nombreUsuario."'");
     if (!$stid)
     {
         $e = oci_error($conexion);
@@ -93,10 +94,10 @@ function lista_tablas_usuario_no_propietario($nombreUsuario)
     // Preparar la sentencia
     $stid = oci_parse(
         $conexion,
-        "       SELECT TABLE_NAME, OWNER
-                FROM ALL_TABLES
-                WHERE owner <> '".$nombreUsuario."' and TABLESPACE_NAME = 'TABLASPROYECTO'
-                ORDER BY TABLE_NAME ");
+        "SELECT TABLE_NAME, OWNER
+         FROM SYS.VISTA_TODAS_LAS_TABLAS
+         WHERE owner <> '".$nombreUsuario."' and TABLESPACE_NAME = 'TABLASPROYECTO'
+         ORDER BY TABLE_NAME ");
     if (!$stid)
     {
         $e = oci_error($conexion);
@@ -125,8 +126,10 @@ function jobs_por_usuario()
     }
 
     // Preparar la sentencia
-    $stid = oci_parse($conexion, "  SELECT *
-                                        FROM VISTA_JOBS ");
+    $stid = oci_parse(
+        $conexion,
+        "SELECT *
+         FROM SYS.VISTA_JOBS ");
     if (!$stid)
     {
         $e = oci_error($conexion);
@@ -155,18 +158,10 @@ function tablespaces()
     }
 
     // Preparar la sentencia
-    $stid = oci_parse($conexion, "  SELECT t.tablespace_name,
-                                            ROUND(MAX(d.bytes)/1024/1024,2) AS Tam,
-                                            ROUND((MAX(d.bytes)/1024/1024) - 
-                                            (SUM(decode(f.bytes, NULL,0, f.bytes))/1024/1024),2) AS Usados,   
-                                            ROUND(SUM(decode(f.bytes, NULL,0, f.bytes))/1024/1024,2) AS Libres
-                                        FROM DBA_FREE_SPACE f, DBA_DATA_FILES d,  DBA_TABLESPACES t  
-                                        WHERE t.tablespace_name = d.tablespace_name     AND 
-                                            f.tablespace_name(+) = d.tablespace_name    AND 
-                                            f.file_id(+) = d.file_id                    and ( t.tablespace_name like '%PROYECTO%') 
-                                        GROUP BY t.tablespace_name,   
-                                                d.file_name,   t.pct_increase, t.status 
-                                        ORDER BY 1,3 DESC ");
+    $stid = oci_parse(
+        $conexion,
+        "SELECT *
+         FROM sys.VISTA_ESPACIO_TABLESPACE; ");
     if (!$stid)
     {
         $e = oci_error($conexion);
@@ -195,22 +190,11 @@ function informacion_tabla($nombreTabla)
     }
 
     // Preparar la sentencia
-    $stid = oci_parse($conexion, "  SELECT  informacion_tabla.TABLA,
-                                                informacion_tabla.owner,
-                                                informacion_tabla.RESTRICCION,
-                                                informacion_tabla.TABLA_COMENTARIO,
-                                                informacion_tabla.INDICE,
-                                                informacion_tabla.tablespace,
-                                                informacion_tabla.status,
-                                                informacion_tabla.indexing
-                                        from informacion_tabla,
-                                            (
-                                                SELECT TABLE_NAME
-                                                FROM ALL_TABLES
-                                                WHERE TABLESPACE_NAME = 'TABLASPROYECTO' AND TABLE_NAME = '".$nombreTabla."'
-                                                ORDER BY TABLE_NAME
-                                            )tablas
-                                        where informacion_tabla.TABLA = tablas.TABLE_NAME ");
+    $stid = oci_parse(
+        $conexion,
+        "SELECT *
+         from sys.informacion_tabla,
+         where informacion_tabla.TABLA = '".$nombreTabla."' ");
     if (!$stid)
     {
         $e = oci_error($conexion);
@@ -239,18 +223,11 @@ function informacion_interna_tabla($nombreTabla)
     }
 
     // Preparar la sentencia
-    $stid = oci_parse($conexion, "  SELECT  informacion_interna_tabla.tabla,
-                                                informacion_interna_tabla.columnas,
-                                                informacion_interna_tabla.tipo,
-                                                informacion_interna_tabla.comentario
-                                        from informacion_interna_tabla,
-                                            (
-                                                SELECT TABLE_NAME
-                                                FROM ALL_TABLES
-                                                WHERE TABLESPACE_NAME = 'TABLASPROYECTO' AND TABLE_NAME = '".$nombreTabla."'
-                                                ORDER BY TABLE_NAME
-                                            )tablas
-                                        where informacion_interna_tabla.TABLA = tablas.TABLE_NAME ");
+    $stid = oci_parse(
+        $conexion,
+        "SELECT *
+         from sys.informacion_interna_tabla,
+         where TABLA = '".$nombreTabla."' ");
     if (!$stid)
     {
         $e = oci_error($conexion);
@@ -279,10 +256,12 @@ function activar_job($nombreTabla)
     }
 
     // Preparar la sentencia
-    $stid = oci_parse($conexion, "  BEGIN
-                                        DBMS_SCHEDULER.ENABLE('".$nombreTabla."');
-                                        END;
-                                        ");
+    $stid = oci_parse(
+        $conexion,
+        "BEGIN
+              DBMS_SCHEDULER.ENABLE('".$nombreTabla."');
+         END;
+         ");
     if (!$stid)
     {
         $e = oci_error($conexion);
@@ -311,10 +290,12 @@ function desactivar_job($nombreTabla)
     }
 
     // Preparar la sentencia
-    $stid = oci_parse($conexion, "  BEGIN
-                                        DBMS_SCHEDULER.DISABLE('".$nombreTabla."');
-                                        END;
-                                        ");
+    $stid = oci_parse(
+        $conexion,
+        "BEGIN
+              DBMS_SCHEDULER.DISABLE('".$nombreTabla."');
+         END;
+         ");
     if (!$stid)
     {
         $e = oci_error($conexion);
