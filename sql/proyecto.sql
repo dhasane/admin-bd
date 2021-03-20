@@ -179,21 +179,21 @@ create or replace view vista_Jobs as
 -- funciones ------------------------------------------------------------------
 
 create or replace view vista_Funciones as
-    SELECT OWNER, OBJECT_NAME
+    SELECT OWNER, OBJECT_NAME AS funcion
     FROM DBA_PROCEDURES
     WHERE OBJECT_TYPE IN ('FUNCTION');
 
 -- procedimientos -------------------------------------------------------------
 
 create or replace view vista_Procedimientos as
-    SELECT OWNER, OBJECT_NAME
+    SELECT OWNER, OBJECT_NAME AS procedimiento
     FROM DBA_PROCEDURES
     WHERE OBJECT_TYPE IN ('PROCEDURE');
 
 -- paquetes -------------------------------------------------------------------
 
 create or replace view vista_Paquetes as
-    SELECT OWNER, OBJECT_NAME
+    SELECT OWNER, OBJECT_NAME AS paquete
     FROM DBA_PROCEDURES
     WHERE OBJECT_TYPE IN ('PACKAGE');
 
