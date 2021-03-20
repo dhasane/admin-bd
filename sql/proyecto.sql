@@ -183,11 +183,26 @@ create or replace view vista_usuarios as
     SELECT username, user_id
     FROM ALL_USERS;
 
-CREATE OR REPLACE VIEW vista_todas_las_tablas
+CREATE OR REPLACE VIEW vista_todas_las_tablas AS
     SELECT TABLE_NAME, OWNER
     FROM DBA_TABLES
     WHERE TABLESPACE_NAME = 'TABLASPROYECTO'
     ORDER BY TABLE_NAME;
+
+GRANT SELECT ON col_nombre_tipo TO PUBLIC;
+GRANT SELECT ON columna_comentarios TO PUBLIC;
+GRANT SELECT ON informacion_interna_tabla TO PUBLIC;
+GRANT SELECT ON restricciones_tabla TO PUBLIC;
+GRANT SELECT ON tabla_comentario TO PUBLIC;
+GRANT SELECT ON indices_tabla TO PUBLIC;
+GRANT SELECT ON informacion_tabla TO PUBLIC;
+GRANT SELECT ON permisos_usuario_tabla TO PUBLIC;
+GRANT SELECT ON espacio_usuario_usado TO PUBLIC;
+GRANT SELECT ON espacio_usuario_libre TO PUBLIC;
+GRANT SELECT ON espacio_usuario TO PUBLIC;
+GRANT SELECT ON vista_Jobs TO PUBLIC;
+GRANT SELECT ON vista_usuarios TO PUBLIC;
+GRANT SELECT ON vista_todas_las_tablas TO PUBLIC;
 
 -------------------------------------------------------------------------------
 --                               permisos grupo                              --
