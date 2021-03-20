@@ -168,13 +168,25 @@ CREATE OR REPLACE VIEW espacio_usuario AS
 
 -- jobs -----------------------------------------------------------------------
 
-create or replace view vista_Jobs as
-    select owner, job_name, enabled
-    from all_scheduler_jobs, (
-        SELECT username
-        FROM ALL_USERS
-    ) usuarios
-    where owner = usuarios.username;
+CREATE OR REPLACE VIEW VISTA_JOBS AS
+    SELECT OWNER,
+           JOB_NAME,
+           JOB_CLASS,
+           COMMENTS,
+           ENABLED,
+           CREDENTIAL_NAME,
+           DESTINATION,
+           PROGRAM_NAME,
+           JOB_TYPE,
+           JOB_ACTION,
+           NUMBER_OF_ARGUMENTS,
+           SCHEDULE_OWNER,
+           SCHEDULE_NAME,
+           SCHEDULE_TYPE,
+           START_DATE,
+           REPEAT_INTERVAL,
+           END_DATE
+    FROM DBA_SCHEDULER_JOBS;
 
 -- funciones ------------------------------------------------------------------
 
@@ -196,7 +208,6 @@ create or replace view vista_Paquetes as
     SELECT OWNER, OBJECT_NAME AS paquete
     FROM DBA_PROCEDURES
     WHERE OBJECT_TYPE IN ('PACKAGE');
-
 
 -- utiles ---------------------------------------------------------------------
 
