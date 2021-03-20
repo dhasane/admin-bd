@@ -1,3 +1,12 @@
+<?php
+
+if(!isset($_SESSION['login'])) {
+    header("Location: ./login.php");
+} else {
+    $conexion = $_SESSION['login'];
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,8 +38,9 @@
         </thead>
         <tbody>
             <?php
-             include_once dirname(__FILE__) . '/consultas/consultas.php';
-            $usuarios = lista_Usuarios();
+            include_once 'consultas.php';
+            include_once 'configuracion.php';
+            $usuarios = lista_Usuarios($conexion);
 
             while ($fila = oci_fetch_array($usuarios, OCI_ASSOC+OCI_RETURN_NULLS)) 
             {

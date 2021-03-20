@@ -1,3 +1,12 @@
+<?php
+
+if(!isset($_SESSION['login'])) {
+    header("Location: ./login.php");
+} else {
+    $conexion = $_SESSION['login'];
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
