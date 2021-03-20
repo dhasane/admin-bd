@@ -139,6 +139,37 @@ if(!isset($_SESSION['login'])) {
         </tbody>
     </table>
 
+    <table border='1' style="width:100%">
+        <caption>Datos de la tablas</caption>
+        <thead>
+            <tr>
+                <th>Nombre tabla</th>
+                <th>Grantor</th>
+                <th>Grantee</th>
+                <th>Permiso</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (isset($_POST['table_name'])) {
+                    $table_name = $_POST['table_name'];
+                    $tablas = permisos_usuario_tabla($table_name);
+
+                    while ($fila = oci_fetch_array($tablas, OCI_ASSOC + OCI_RETURN_NULLS)) {
+                        echo "<tr>\n";
+                        echo "<td>" . $fila['TABLA'] . "</td>";
+                        echo "<td>" . $fila['GRANTOR'] . "</td>";
+                        echo "<td>" . $fila['GRANTEE'] . "</td>";
+                        echo "<td>" . $fila['PRIVILEGIO'] . "</td>";
+                        echo "</tr>\n";
+                    }
+                }
+            }
+            ?>
+        </tbody>
+    </table>
+
     <div class="">
         <div class="login_form">
         </div>

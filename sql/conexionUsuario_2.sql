@@ -72,7 +72,17 @@ BEGIN
 END;
 /
 
+insert into primprimeratablausuario_2 values (1, 111111, 'PATRICA');
 
-SELECT *
-FROM SYS.INFORMACION_TABLA
-WHERE owner = 'USUARIO_3'
+BEGIN
+ 
+  FOR numero IN 1..10
+  LOOP
+    insert into tablaTBS_1 values (5,'nombre_'||numero);
+  END LOOP;
+ 
+END;
+
+
+select *
+from sys.espacio_usuario;

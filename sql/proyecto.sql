@@ -156,7 +156,8 @@ CREATE OR REPLACE VIEW espacio_usuario_libre AS
     /
 
 CREATE OR REPLACE VIEW espacio_usuario AS
-    SELECT usado.TABLESPACE_NAME,
+    SELECT usado.TABLESPACE_NAME, 
+           usado.owner,
            usado.bytes AS bytes_usados,
            usado.bloques AS bloques_usados,
            libre.bytes AS bytes_libres,

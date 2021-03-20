@@ -162,7 +162,8 @@ function tablespaces()
     $stid = oci_parse(
         $conexion,
         "SELECT *
-         FROM sys.VISTA_ESPACIO_TABLESPACE; ");
+         FROM sys.VISTA_ESPACIO_TABLESPACE ");
+
     if (!$stid)
     {
         $e = oci_error($conexion);
@@ -311,5 +312,72 @@ function desactivar_job($nombreTabla)
     }
     oci_close($conexion);
     return true;
+}
+
+function espacio_usuarios()
+{
+
+    $conexion = oci_connect($_SESSION['login'], $_SESSION['password'], HOST_DB);
+
+    if (!$conexion)
+    {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+
+    // Preparar la sentencia
+    $stid = oci_parse(
+        $conexion,
+        "   SELECT *
+            FROM SYS.ESPACIO_USUARIO
+         ");
+    if (!$stid)
+    {
+        $e = oci_error($conexion);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+
+    // Realizar la lógica de la consulta
+    $r = oci_execute($stid);
+    if (!$r) {
+        $e = oci_error($stid);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+    oci_close($conexion);
+    return $stid;
+}
+
+function permisos_usuario_tabla($nombreTabla)
+{
+
+    $conexion = oci_connect($_SESSION['login'], $_SESSION['password'], HOST_DB);
+
+    if (!$conexion)
+    {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+
+    // Preparar la sentencia
+    $stid = oci_parse(
+        $conexion,
+        "   SELECT *
+            FROM SYS.permisos_usuario_tabla
+            WHERE TABLA = '".$nombreTabla."'
+         ");
+    if (!$stid)
+    {
+        $e = oci_error($conexion);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+
+    // Realizar la lógica de la consulta
+    $r = oci_execute($stid);
+    if (!$r) {
+        $e = oci_error($stid);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+    oci_close($conexion);
+    return $stid;
 }
 ?>
