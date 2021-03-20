@@ -180,31 +180,22 @@ create or replace view vista_Jobs as
 
 create or replace view vista_Funciones as
     SELECT OBJECT_NAME 
-	FROM all_procedures, (
-        SELECT username
-        FROM ALL_USERS
-    ) usuarios
-    WHERE OBJECT_TYPE IN ('FUNCTION') AND owner = usuarios.username;
+	FROM all_procedures
+    WHERE OBJECT_TYPE IN ('FUNCTION');
 
 -- procedimientos -------------------------------------------------------------
 
 create or replace view vista_Procedimientos as
     SELECT OBJECT_NAME 
-	FROM all_procedures, (
-        SELECT username
-        FROM ALL_USERS
-    ) usuarios
-    WHERE OBJECT_TYPE IN ('PROCEDURE') AND owner = usuarios.username;
+	FROM all_procedures
+    WHERE OBJECT_TYPE IN ('PROCEDURE');
 
 -- paquetes -------------------------------------------------------------------
 
 create or replace view vista_Paquetes as
     SELECT OBJECT_NAME 
-	FROM all_procedures, (
-        SELECT username
-        FROM ALL_USERS
-    ) usuarios
-    WHERE OBJECT_TYPE IN ('PACKAGE') AND owner = usuarios.username;
+	FROM all_procedures
+    WHERE OBJECT_TYPE IN ('PACKAGE');
 
 
 -- utiles ---------------------------------------------------------------------
