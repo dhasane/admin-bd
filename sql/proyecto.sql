@@ -183,6 +183,12 @@ create or replace view vista_usuarios as
     SELECT username, user_id
     FROM ALL_USERS;
 
+CREATE OR REPLACE VIEW vista_todas_las_tablas
+    SELECT TABLE_NAME, OWNER
+    FROM DBA_TABLES
+    WHERE TABLESPACE_NAME = 'TABLASPROYECTO'
+    ORDER BY TABLE_NAME;
+
 -------------------------------------------------------------------------------
 --                               permisos grupo                              --
 -------------------------------------------------------------------------------
