@@ -50,6 +50,7 @@ if (!isset($_SESSION['login'])) {
             function logout()
             {
                 unset($_SESSION);
+                header("Location: ./login.php");
             }
 
             if (array_key_exists('logoutbtn', $_POST)) {
