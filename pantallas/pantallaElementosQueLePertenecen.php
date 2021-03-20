@@ -52,11 +52,11 @@ if(!isset($_SESSION['login'])) {
                 while ($fila = oci_fetch_array($tablas, OCI_ASSOC+OCI_RETURN_NULLS)) 
                 {
                     echo "<tr>\n";
-                        echo "<td>".$fila['TABLE_NAME']."</td>";
+                        echo "<td>".$fila['TABLA']."</td>";
                         echo "<td>";
                         echo    "<form action='pantallaElementosQueLePertenecen.php' method='post'>";
                         echo        "<input type='submit' value='Ejecutar'>";
-                        echo        "<input type='hidden' name='table_name' value=". $fila['TABLE_NAME'].">";
+                        echo        "<input type='hidden' name='table_name' value=". $fila['TABLA'].">";
                         echo        "<input type='hidden' name='idUsuario' value=".$idUsuario.">"; // esto evita que la tabla se borre al oprimir ejecutar
                         echo        "<input type='hidden' name='nombreUsuario' value=".$nombreUsuario.">"; // esto evita que la tabla se borre al oprimir ejecutar
                         echo    "</form>";

@@ -61,9 +61,10 @@ function lista_tablas_usuario($nombreUsuario)
     // Preparar la sentencia
     $stid = oci_parse(
         $conexion,
-        "SELECT TABLE_NAME
-         FROM SYS.ALL_TABLES
-         WHERE owner = '".$nombreUsuario."'");
+        "SELECT TABLA
+         FROM SYS.INFORMACION_TABLA
+         WHERE owner = '".$nombreUsuario."'
+         GROUP BY TABLA");
     if (!$stid)
     {
         $e = oci_error($conexion);
@@ -96,7 +97,7 @@ function lista_tablas_usuario_no_propietario($nombreUsuario)
         $conexion,
         "SELECT TABLE_NAME, OWNER
          FROM SYS.VISTA_TODAS_LAS_TABLAS
-         WHERE owner <> '".$nombreUsuario."' and TABLESPACE_NAME = 'TABLASPROYECTO'
+         WHERE owner <> '".$nombreUsuario."'
          ORDER BY TABLE_NAME ");
     if (!$stid)
     {
@@ -193,8 +194,8 @@ function informacion_tabla($nombreTabla)
     $stid = oci_parse(
         $conexion,
         "SELECT *
-         from sys.informacion_tabla,
-         where informacion_tabla.TABLA = '".$nombreTabla."' ");
+         from sys.informacion_tabla
+         where TABLA = '".$nombreTabla."' ");
     if (!$stid)
     {
         $e = oci_error($conexion);
@@ -226,7 +227,7 @@ function informacion_interna_tabla($nombreTabla)
     $stid = oci_parse(
         $conexion,
         "SELECT *
-         from sys.informacion_interna_tabla,
+         from sys.informacion_interna_tabla
          where TABLA = '".$nombreTabla."' ");
     if (!$stid)
     {

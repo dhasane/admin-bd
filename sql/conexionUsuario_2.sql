@@ -71,3 +71,8 @@ BEGIN
     enabled         => TRUE);
 END;
 /
+
+
+SELECT *
+FROM SYS.INFORMACION_TABLA
+WHERE owner = 'USUARIO_3'
