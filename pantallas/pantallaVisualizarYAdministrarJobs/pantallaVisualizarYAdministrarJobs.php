@@ -1,9 +1,11 @@
 <?php
 
+session_start();
+
 if(!isset($_SESSION['login'])) {
     header("Location: ./login.php");
 } else {
-    $conexion = $_SESSION['login'];
+    $GLOBAL['conexion'] = $_SESSION['login'];
 }
 
 ?>
@@ -58,7 +60,7 @@ if(!isset($_SESSION['login'])) {
 
             <?php
                 include_once dirname(__FILE__) . '../../../consultas/consultas.php';
-                $tablas = jobs_por_usuario($conexion);
+                $tablas = jobs_por_usuario($GLOBAL['conexion']);
 
                 $n = 0;
                 while ($fila = oci_fetch_array($tablas, OCI_ASSOC+OCI_RETURN_NULLS)) 
@@ -110,22 +112,22 @@ if(!isset($_SESSION['login'])) {
                     {
                         if($_POST['nombreUsuario'] == $_POST['dueñoJob'.$m])
                         {
-                            $respuesta = activar_job($conexion, $_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
+                            $respuesta = activar_job($GLOBAL['conexion'], $_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
                         }
                         else
                         {
-                            $respuesta = activar_job($conexion, $_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
+                            $respuesta = activar_job($GLOBAL['conexion'], $_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
                         }
                     }
                     elseif( $_POST['opcion'.$m] == 'Desactivar' )
                     {
                         if($_POST['nombreUsuario'] == $_POST['dueñoJob'.$m])
                         {
-                            $respuesta = desactivar_job($conexion, $_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
+                            $respuesta = desactivar_job($GLOBAL['conexion'], $_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
                         }
                         else
                         {
-                            $respuesta = desactivar_job($conexion, $_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
+                            $respuesta = desactivar_job($GLOBAL['conexion'], $_POST['dueñoJob'.$m].".".$_POST['nombreJob'.$m]);
                         }
                     }
                 }   

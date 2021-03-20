@@ -27,9 +27,10 @@ function lista_Usuarios($conexion)
 
     // Preparar la sentencia
     $stid = oci_parse(
-        $conexion, "    SELECT *
-                        FROM VISTA_USUARIOS
-                                        ");
+        $conexion,
+        "SELECT *
+        FROM VISTA_USUARIOS;
+        ");
 
     if (!$stid)
     {

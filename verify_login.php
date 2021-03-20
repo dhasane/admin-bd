@@ -15,5 +15,4 @@ if ($log != "") {
     $_SESSION['login'] = $log;
    // header("Location: ./index.php");
 }
-
 ?>

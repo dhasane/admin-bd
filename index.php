@@ -2,10 +2,11 @@
 session_start();
 //var_dump($_SESSION);
 
+
 if(!isset($_SESSION['login'])) {
     header("Location: ./login.php");
 } else {
-    $conexion = $_SESSION['login'];
+    $GLOBAL['conexion'] = $_SESSION['login'];
 }
 
 ?>
@@ -42,10 +43,7 @@ if(!isset($_SESSION['login'])) {
             <?php
             include_once 'consultas.php';
             include_once 'configuracion.php';
-
-            $conexion = $_SESSION['login'];
-            $usuarios = lista_Usuarios($conexion);
-
+            $usuarios = lista_Usuarios($GLOBAL['conexion']);
             while ($fila = oci_fetch_array($usuarios, OCI_ASSOC+OCI_RETURN_NULLS)) 
             {
                 echo "<tr>\n";

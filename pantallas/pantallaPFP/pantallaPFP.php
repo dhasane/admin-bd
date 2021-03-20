@@ -1,9 +1,11 @@
 <?php
 
+session_start();
+
 if(!isset($_SESSION['login'])) {
     header("Location: ./login.php");
 } else {
-    $conexion = $_SESSION['login'];
+    $GLOBAL['conexion'] = $_SESSION['login'];
 }
 
 ?>
