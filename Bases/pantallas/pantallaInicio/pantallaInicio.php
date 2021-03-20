@@ -22,10 +22,11 @@
         $str_datos = "";
         $str_datos.="<h1>Bienvenido usuario: ".$nombreUsuario." codigo: ".$idUsuario."</h1>";
         echo $str_datos;
+
+        echo "<a href='../../index.php?idUsuario=".$idUsuario."&nombreUsuario=".$nombreUsuario."'>Volver</a><br>";
     ?>
 
     <h2>Por favor seleccione la operación que desea realizar</h2>
-    <br>
     <br>
 
     <h2>Operaciones de usuario</h2>
