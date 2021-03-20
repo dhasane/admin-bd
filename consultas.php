@@ -380,4 +380,107 @@ function permisos_usuario_tabla($nombreTabla)
     oci_close($conexion);
     return $stid;
 }
+
+
+function procedimientos_usuarios($nombreUsuario)
+{
+
+    $conexion = oci_connect($_SESSION['login'], $_SESSION['password'], HOST_DB);
+
+    if (!$conexion)
+    {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+
+    // Preparar la sentencia
+    $stid = oci_parse(
+        $conexion,
+        "   SELECT*
+            from sys.vista_Procedimientos
+            WHERE OWNER = '".$nombreUsuario."'
+         ");
+    if (!$stid)
+    {
+        $e = oci_error($conexion);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+
+    // Realizar la lógica de la consulta
+    $r = oci_execute($stid);
+    if (!$r) {
+        $e = oci_error($stid);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+    oci_close($conexion);
+    return $stid;
+}
+
+function funciones_usuarios($nombreUsuario)
+{
+
+    $conexion = oci_connect($_SESSION['login'], $_SESSION['password'], HOST_DB);
+
+    if (!$conexion)
+    {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+
+    // Preparar la sentencia
+    $stid = oci_parse(
+        $conexion,
+        "   SELECT*
+            from sys.vista_Funciones
+            WHERE OWNER = '".$nombreUsuario."'
+         ");
+    if (!$stid)
+    {
+        $e = oci_error($conexion);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+
+    // Realizar la lógica de la consulta
+    $r = oci_execute($stid);
+    if (!$r) {
+        $e = oci_error($stid);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+    oci_close($conexion);
+    return $stid;
+}
+
+function Paquetes_usuarios($nombreUsuario)
+{
+
+    $conexion = oci_connect($_SESSION['login'], $_SESSION['password'], HOST_DB);
+
+    if (!$conexion)
+    {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+
+    // Preparar la sentencia
+    $stid = oci_parse(
+        $conexion,
+        "   SELECT*
+            from sys.vista_Paquetes
+            WHERE OWNER = '".$nombreUsuario."'
+         ");
+    if (!$stid)
+    {
+        $e = oci_error($conexion);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+
+    // Realizar la lógica de la consulta
+    $r = oci_execute($stid);
+    if (!$r) {
+        $e = oci_error($stid);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+    oci_close($conexion);
+    return $stid;
+}
 ?>

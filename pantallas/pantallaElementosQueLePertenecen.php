@@ -144,9 +144,4 @@ if(!isset($_SESSION['login'])) {
             ?>
         </tbody>
     </table>
-
-  <div class="">
-        <div class="login_form">
-        </div>
-    </div>
 </body>

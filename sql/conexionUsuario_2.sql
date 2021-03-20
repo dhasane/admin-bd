@@ -84,5 +84,3 @@ BEGIN
 END;
 
 
-select *
-from sys.espacio_usuario;

@@ -81,3 +81,17 @@ from all_scheduler_jobs, (
     FROM ALL_USERS
 ) usuarios 
 where owner = usuarios.username;
+
+SELECT *
+FROM SYS.permisos_usuario_tabla
+where tabla = 'PRIMERATABLAUSUARIO_1';
+
+
+select *
+from sys.vista_Procedimientos;
+
+select *
+from sys.vista_Paquetes;
+
+select *
+from sys.vista_Funciones;
